@@ -1,0 +1,26 @@
+List of aviable commands:
+(Prefix:" + config.prefix + ")
+
+         8ball : Answers questions
+    avatar/pfp : Shows a users avatar
+bet/$$$/gamble : Gamble with money
+           buy : Buy items from the shop
+           gif : Searches for gifs
+          info : displays info aboout the bot
+        invite : Invite the bot to your server
+   noodle/size : Learn about others noodle sizes
+          ping : Pong!
+       profile : Displays your profile
+    resetcolor : Resets your profile color
+           rob : Steal other's money 
+           say : Makes me say things
+          sayd : Makes me say things, then delete your message
+           set : Change profile settings
+         stalk : Gets information about people
+
+ To view help for specific commands, do *help <command>
+
+
+----------
+
+List of aviable commands:\n\n         8ball : Answers questions\n    avatar/pfp : Shows a users avatar\nbet/$$$/gamble : Gamble with money\n           buy : Buy items from the shop\n           gif : Searches for gifs\n          info : displays info aboout the bot\n        invite : Invite the bot to your server\n   noodle/size : Learn about others noodle sizes\n          ping : Pong!\n       profile : Displays your profile\n    resetcolor : Resets your profile color\n           rob : Steal other's money \n           say : Makes me say things\n          sayd : Makes me say things, then delete your message\n           set : Change profile settings\n         stalk : Gets information about people\n\n To view help for specific commands, do *help <command>
