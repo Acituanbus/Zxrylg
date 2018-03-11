@@ -1,4 +1,3 @@
-//hi
 //require() will tell node that we need to use these modules from our node_modules folder
 const Discord = require("discord.js");
 const request = require("request");
@@ -11,7 +10,7 @@ var bot = new Discord.Client();
 
 //--------------------------------------------- Prepare
 bot.on('ready', () => {
-	//bot.user.setUsername("Warpbot")
+	bot.user.setUsername("Acibot")
 	console.log(`-------\nReady!\nLogged in as: ${bot.user.username}\nConnected to ${bot.guilds.size} servers and ${bot.users.size} users!\n--------`)
   	bot.user.setPresence({game: {name: `over ${bot.guilds.size} servers | ${config.prefix}help`, type: 3}})
 });
@@ -34,7 +33,7 @@ fs.readFile(`./database.json`, `utf8`, (err, data) => {
 	data = JSON.parse(data, null, 2)
 
 if(data.users[message.author.id] == undefined) {
-      data.users[message.author.id] = {"bio": `~Edit your bio with \`${config.prefix}set bio <text>\`\n~Edit your color with \`${config.prefix}set color <color>\` for $100`, "cash": 100, "color" : "36393E", "Name:": message.author.username, "dick" : randomInt(7) + 2 + `.${randomInt(9)}`, "daily" : 0, "item": "none", "cookies": 0}
+      data.users[message.author.id] = {"bio": `~Edit your bio with \`${config.prefix}set bio <text>\`\n~Edit your color with \`${config.prefix}set color <color>\` for $100`, "cash": 100, "color" : "36393E", "Name:": message.author.username, "dick" : randomInt(7) + 2 + `.${randomInt(9)}`, "daily" : 1, "item": "none", "cookies": 0, "cookietime": 1}
       fs.writeFile(`./database.json`, JSON.stringify(data, null, 2), function (err) {
         if (err) return console.log(err);
       });
@@ -153,6 +152,8 @@ List of aviable commands:
 	avatar/pfp : Shows a users avatar
 bet/$$$/gamble : Gamble with money
 	       buy : Buy items from the shop
+	    cookie : Give others a cookie
+	     daily : Get your daily credits
 	       gif : Searches for gifs
 	      info : displays info aboout the bot
 	    invite : Invite the bot to your server
@@ -204,29 +205,13 @@ if (cmd == "profile"){
 	.setColor(data.users[member.id].color)
 	.setTitle(`Bio:\n⁣`)
 	.setDescription(`**${data.users[member.id].bio}**\n⁣`)
-	.addField("Cash:\n⁣", "$"+data.users[member.id].cash + "\n⁣")
-	.addField("Noodle size:\n⁣", data.users[member.id].dick + " Inches\n⁣", true)
+	.addField("Cash:\n⁣", "💰 $"+data.users[member.id].cash + "\n⁣", true)
+	.addField("Cookies:", `🍪 ${data.users[member.id].cookies}\n⁣`, true)
+	.addField("Noodle size:\n⁣", "📏 " + data.users[member.id].dick + " Inches\n⁣", true)
 	.addField("Item equipped:\n⁣", data.users[member.id].item, true)
 	//.addField("User:\n⁣", message.member.username)
 	message.channel.send(profemb)
 }
-/*if (cmd == "profile"){
-	if (!args[0]){
-		var userdata = data.users[message.author.id]
-		var user= message.author
-	} else {
-		var userdata = data.users[message.mentions.members.first().id]
-		var user = message.mentions.members.first()
-	}
-	profemb = new Discord.RichEmbed()
-	.setThumbnail(user.avatarURL)
-	.setTitle(`${user.displayName}'s Profile`)
-	.setColor(userdata.color)
-	.setDescription(`**${userdata.bio}**`)
-	.addField("Cash:\n⁣", userdata.cash)
-	//.addField("User:\n⁣", user.username)
-	message.channel.send(profemb)
-}*/
 
 if (cmd == "$$$" || cmd == "gamble" || cmd == "bet"){
 	//--checks if the user placed a viable bet
@@ -508,6 +493,26 @@ if (cmd == "noodle" || cmd == "size"){
 		} else {
 			message.channel.send(`${user.displayName}'s noodle is **` + data.users[user.id].dick + " inches** long!")			
 		}
+	}
+}
+
+if(cmd === "daily") {
+	if(data.users[message.author.id].daily == new Date().getDay()) return message.channel.send("❌ You can only do this once a day!");
+	data.users[message.author.id].daily = new Date().getDay()
+	dailies = randomInt(100) + 100
+	data.users[message.author.id].cash = parseInt(data.users[message.author.id].cash) + dailies
+	message.channel.send(`${message.member.displayName}, you got your **${dailies}** daily credits! Come back tomorrow to get more!`) 
+}
+
+if(cmd === "cookie") {
+	if(data.users[message.author.id].cookietime == new Date().getDay()) return message.channel.send("❌ You can only give one cookie a day!");
+	else if (!message.mentions.members.first()){message.channel.send("❌ You need to mention the person you want to give the cookie to!")}
+	else if (message.mentions.members.first() == message.member){message.channel.send("You can't give yourself a cookie!")}
+	else if (data.users[message.mentions.members.first().id] == undefined){message.channel.send("❌ I can't find that user in my databank :/")}
+	else {
+		data.users[message.author.id].cookietime = new Date().getDay()
+		data.users[message.mentions.members.first().id].cookies = parseInt(data.users[message.mentions.members.first().id].cookies) + 1
+		message.channel.send(`<@${message.mentions.members.first().id}> got one cookie from **${message.author.username}**!`)
 	}
 }
 
