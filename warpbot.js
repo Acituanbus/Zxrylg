@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 //require() will tell node that we need to use these modules from our node_modules folder
 const Discord = require("discord.js");
 const request = require("request");
