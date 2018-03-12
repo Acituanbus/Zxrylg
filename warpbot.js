@@ -34,7 +34,7 @@ fs.readFile(`./database.json`, `utf8`, (err, data) => {
 	data = JSON.parse(data, null, 2)
 
 if(data.users[message.author.id] == undefined) {
-      data.users[message.author.id] = {"bio": `~Edit your bio with \`${config.prefix}set bio <text>\`\n~Edit your color with \`${config.prefix}set color <color>\` for $100`, "cash": 100, "color" : "36393E", "Name:": message.author.username, "dick" : randomInt(7) + 2 + `.${randomInt(9)}`, "daily" : 1, "item": "none", "cookies": 0, "cookietime": 1}
+      data.users[message.author.id] = {"bio": `~Edit your bio with \`${config.prefix}set bio <text>\`\n~Edit your color with \`${config.prefix}set color <color>\` for $100`, "cash": 100, "color" : "36393E", "Name:": message.author.username, "dick" : randomInt(7) + 2 + `.${randomInt(9)}`, "daily" : 10, "item": "none", "cookies": 0, "cookietime": 10}
       fs.writeFile(`./database.json`, JSON.stringify(data, null, 2), function (err) {
         if (err) return console.log(err);
       });
