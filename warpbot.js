@@ -421,12 +421,15 @@ if (cmd == "set"){
 		//--makes sure people give a text to setthe bio to
 		if (!args[1]){
 			message.channel.send("❌ You need to tell me what to set your bio to!")
-		if(args.slice(1).join(" ").lengh > 500){message.channel.send("❌ That bio is too long!")}
 		} else {
 			//--saves the specified bio to the users profile
 			let bio = args.slice(1).join(" ")
-			data.users[message.author.id].bio = bio
-			message.channel.send("✅ I sucessfully updated your bio!")
+			if(args.slice(1).join(" ").length > 500){
+				message.channel.send("❌ That bio is too long! (Max 500 characters)")
+			} else{
+				data.users[message.author.id].bio = bio
+				message.channel.send("✅ I sucessfully updated your bio!")
+			}
 		}
 		break;
 	default:
