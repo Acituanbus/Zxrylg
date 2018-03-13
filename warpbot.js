@@ -303,7 +303,6 @@ if (cmd == "rob"){
 					}
 				default:
 					message.channel.send(`❌ There's no item called ${args[2]}!`)
-						console.log("Item not found: " + item)
 					break;
 				}			
 			}
@@ -365,7 +364,7 @@ if (cmd == "rob"){
 					.setThumbnail(itemurl)
 					message.channel.send(robembed)
 				}
-			}console.log(authorurl)
+			}
 		}
 	}
 }
@@ -520,7 +519,7 @@ if(cmd === "daily") {
 }
 
 if(cmd === "cookie") {
-	if(data.users[message.author.id].cookietime == new Date().getDay()) return message.channel.send("❌ You can only give one cookie a day!");
+	if(data.users[message.author.id].cookietime == new Date().getDay()) return message.channel.send("❌ You can only give a cookie a day!");
 	else if (!message.mentions.members.first()){message.channel.send("❌ You need to mention the person you want to give the cookie to!")}
 	else if (message.mentions.members.first() == message.member){message.channel.send("You can't give yourself a cookie!")}
 	else if (data.users[message.mentions.members.first().id] == undefined){message.channel.send("❌ I can't find that user in my database :/ (Do \`;profile <user>\` to generate the profile for them)")}
@@ -725,7 +724,6 @@ bot.on("guildCreate", guild => {
 	.setFooter("Made by Acituanbus#2729", "https://i.imgur.com/fAFm2e8.png")
 	guild.defaultChannel.send(joinedembed)
 
-	console.log("Joined a guild")
 
 	addembed = new Discord.RichEmbed()
 	.setColor("11ff22")
@@ -738,7 +736,6 @@ bot.on("guildCreate", guild => {
 });
 
 bot.on("guildDelete", guild => {
-	console.log("Left a guild")
 	removeembed = new Discord.RichEmbed()
 	.setColor("FF1122")
 	.setThumbnail(guild.iconURL)
