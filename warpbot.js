@@ -519,14 +519,14 @@ if(cmd === "daily") {
 }
 
 if(cmd === "cookie") {
-	if(data.users[message.author.id].cookietime == new Date().getDay()) return message.channel.send("❌ You can only give a cookie a day!");
+	if(data.users[message.author.id].cookietime == new Date().getDay()) return message.channel.send("❌ You can only give one cookie a day!");
 	else if (!message.mentions.members.first()){message.channel.send("❌ You need to mention the person you want to give the cookie to!")}
 	else if (message.mentions.members.first() == message.member){message.channel.send("You can't give yourself a cookie!")}
 	else if (data.users[message.mentions.members.first().id] == undefined){message.channel.send("❌ I can't find that user in my database :/ (Do \`;profile <user>\` to generate the profile for them)")}
 	else {
 		data.users[message.author.id].cookietime = new Date().getDay()
 		data.users[message.mentions.members.first().id].cookies = parseInt(data.users[message.mentions.members.first().id].cookies) + 1
-		message.channel.send(`<@${message.mentions.members.first().id}> got one cookie from **${message.author.username}**!`)
+		message.channel.send(`<@${message.mentions.members.first().id}> got a cookie from **${message.author.username}**!`)
 	}
 }
 
