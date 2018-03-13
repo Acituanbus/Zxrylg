@@ -526,7 +526,7 @@ if(cmd === "cookie") {
 	else {
 		data.users[message.author.id].cookietime = new Date().getDay()
 		data.users[message.mentions.members.first().id].cookies = parseInt(data.users[message.mentions.members.first().id].cookies) + 1
-		message.channel.send(`<@${message.mentions.members.first().id}> got aa cookie from **${message.author.username}**!`)
+		message.channel.send(`<@${message.mentions.members.first().id}> got a cookie from **${message.author.username}**!`)
 	}
 }
 
