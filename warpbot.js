@@ -198,20 +198,27 @@ if (cmd == "profile"){
     if(!member) {
       member = message.member
     }
+    if(data.users[member.id] == undefined) {
+      data.users[member.id] = {"bio": `~Edit your bio with \`${config.prefix}set bio <text>\`\n~Edit your color with \`${config.prefix}set color <color>\` for $100`, "cash": 100, "color" : "36393E", "Name:": bot.users.find('id', member.id).username, "dick" : randomInt(7) + 2 + `.${randomInt(9)}`, "daily" : 10, "item": "none", "cookies": 0, "cookietime": 10}
+      fs.writeFile(`./database.json`, JSON.stringify(data, null, 2), function (err) {
+        if (err) return console.log(err);
+      });
+}
     if(member == bot) return message.channel.send("❌ Bots don't have profiles")
-    else if(data.users[member.id] == undefined) return message.channel.send("❌ I can't find that person in my database!")
-	profemb = new Discord.RichEmbed()
-	.setThumbnail(bot.users.find('id', member.id).avatarURL)
-	.setAuthor(`${bot.users.find('id', member.id).username}'s Profile\n⁣`, "https://i.imgur.com/4zvlRip.png")
-	.setColor(data.users[member.id].color)
-	.setTitle(`Bio:\n⁣`)
-	.setDescription(`**${data.users[member.id].bio}**\n⁣`)
-	.addField("Cash:\n⁣", "💰 $"+data.users[member.id].cash + "\n⁣", true)
-	.addField("Cookies:", `🍪 ${data.users[member.id].cookies}\n⁣`, true)
-	.addField("Noodle size:\n⁣", "📏 " + data.users[member.id].dick + " Inches\n⁣", true)
-	.addField("Item equipped:\n⁣", data.users[member.id].item, true)
-	//.addField("User:\n⁣", message.member.username)
-	message.channel.send(profemb)
+    else{
+		profemb = new Discord.RichEmbed()
+		.setThumbnail(bot.users.find('id', member.id).avatarURL)
+		.setAuthor(`${bot.users.find('id', member.id).username}'s Profile\n⁣`, "https://i.imgur.com/4zvlRip.png")
+		.setColor(data.users[member.id].color)
+		.setTitle(`Bio:\n⁣`)
+		.setDescription(`**${data.users[member.id].bio}**\n⁣`)
+		.addField("Cash:\n⁣", "💰 $"+data.users[member.id].cash + "\n⁣", true)
+		.addField("Cookies:", `🍪 ${data.users[member.id].cookies}\n⁣`, true)
+		.addField("Noodle size:\n⁣", "📏 " + data.users[member.id].dick + " Inches\n⁣", true)
+		.addField("Item equipped:\n⁣", data.users[member.id].item, true)
+		//.addField("User:\n⁣", message.member.username)
+		message.channel.send(profemb)
+	}
 }
 
 if (cmd == "$$$" || cmd == "gamble" || cmd == "bet"){
@@ -251,7 +258,7 @@ if (cmd == "rob"){
 	//--checks if a user was mentioned, if that user is in the database and if the amount is a number
 	if (!args[0]){message.channel.send("❌ You didn't specify a victim!")}
 	else if (message.mentions.members.first() == message.member) {message.channel.send("❌ You can't rob yourself!")}
-	else if (message.mentions.members.first() == undefined || data.users[message.mentions.members.first().id] == undefined){message.channel.send("❌ I can't find that victim in my database!")}
+	else if (message.mentions.members.first() == undefined || data.users[message.mentions.members.first().id] == undefined){message.channel.send("❌ I can't find that victim in my database! :/ (Do \`;profile <user>\` to generate the profile for them)")}
 	else if (!args[1] || isNaN(args[1])){
 		message.channel.send("❌ You have to specify how much you want to steal in numbers!")
 	} else {
@@ -307,21 +314,21 @@ if (cmd == "rob"){
 				data.users[message.author.id].cash = data.users[message.author.id].cash + parseInt(args[1])
 				//--if there was no weapon used:
 				if (item == "none"){
-					var author = `${message.author.username}` 
-					var authorurl = `${message.author.avatarURL}`
+					var author = `${message.author.username}`
 					var desc = `just stole $${parseInt(args[1])} from **${message.mentions.members.first().displayName}** with their bare hands!\n⁣`
 					var itemurl = "https://www.madcatmarketing.co.uk/wp-content/uploads/2014/10/Bloody-hand-print-on-transparent-background.png"
 					var col = "00ff32"
 				}
 				//--if there was a weapon used:
 				else if (item != "none") {
-					var author = `${message.author.username}` 
-					var authorurl = `${message.author.avatarURL}`
+					var author = `${message.author.username}`
 					var desc = `just stole $${parseInt(args[1])} from **${message.mentions.members.first().displayName}** with a ${item}!\n⁣`
 					var col = "00ff32"
 					if (item == "Knife"){var itemurl = "https://i.imgur.com/m9mETqB.png"}
 					else if (item == "Gun"){var itemurl = "https://i.imgur.com/adCJMU1.png"}
 				}
+				if(message.author.avatarURL == null){var authorurl = "https://i.imgur.com/AanCcQ1.png"}
+				else {var authorurl = `${message.author.avatarURL}`}
 				robembed = new Discord.RichEmbed()
 				.setAuthor(author, authorurl)
 				.setDescription(desc)
@@ -335,21 +342,21 @@ if (cmd == "rob"){
 					data.users[message.author.id].cash = data.users[message.author.id].cash - parseInt(args[1])
 					//--if there was no weapon used:
 					if (item == "none"){
-						var author = `${message.author.username}` 
-						var authorurl = `${message.author.avatarURL}`
+						var author = `${message.author.username}`
 						var desc = `tried stealing $${parseInt(args[1])} from **${message.mentions.members.first().displayName}** with their bare hands and failed!\n⁣`
 						var itemurl = "https://www.madcatmarketing.co.uk/wp-content/uploads/2014/10/Bloody-hand-print-on-transparent-background.png"
 						var col= "bf0000"
 					}
 					//--if there was a weapon used:
 					else if (item != "none"){
-						var author = `${message.author.username}` 
-						var authorurl = `${message.author.avatarURL}`
+						var author = `${message.author.username}`
 						var desc = `tried stealing $${parseInt(args[1])} from **${message.mentions.members.first().displayName}** with a ${item} and failed!\n⁣`
 						var col = "bf0000"
 						if (item == "Knife"){var itemurl = "https://i.imgur.com/m9mETqB.png"}
 						else if (item == "Gun"){var itemurl = "https://i.imgur.com/adCJMU1.png"}
 					}
+					if(message.author.avatarURL == null){var authorurl = "https://i.imgur.com/AanCcQ1.png"}
+					else {var authorurl = `${message.author.avatarURL}`}
 					robembed = new Discord.RichEmbed()
 					.setAuthor(author, authorurl)
 					.setDescription(desc)
@@ -358,7 +365,7 @@ if (cmd == "rob"){
 					.setThumbnail(itemurl)
 					message.channel.send(robembed)
 				}
-			}
+			}console.log(authorurl)
 		}
 	}
 }
@@ -393,6 +400,9 @@ if (cmd == "set"){
 				break;
 			case"lightblue":
 				var profcolor = "00AAFF"
+				break;
+			case"white":
+				var profcolor = "FFFFFF"
 				break;
 			default:
 				var profcolor = args[1]
@@ -494,7 +504,7 @@ if (cmd == "noodle" || cmd == "size"){
 	} else {
 		user = message.mentions.members.first()
 		if(data.users[user.id] == undefined) {
-			message.channel.send(`❌ I can't find that user in my databank :/`)	
+			message.channel.send(`❌ I can't find that user in my database :/ (Do \`;profile <user>\` to generate the profile for them)`)	
 		} else {
 			message.channel.send(`${user.displayName}'s noodle is **` + data.users[user.id].dick + " inches** long!")			
 		}
@@ -513,7 +523,7 @@ if(cmd === "cookie") {
 	if(data.users[message.author.id].cookietime == new Date().getDay()) return message.channel.send("❌ You can only give one cookie a day!");
 	else if (!message.mentions.members.first()){message.channel.send("❌ You need to mention the person you want to give the cookie to!")}
 	else if (message.mentions.members.first() == message.member){message.channel.send("You can't give yourself a cookie!")}
-	else if (data.users[message.mentions.members.first().id] == undefined){message.channel.send("❌ I can't find that user in my databank :/")}
+	else if (data.users[message.mentions.members.first().id] == undefined){message.channel.send("❌ I can't find that user in my database :/ (Do \`;profile <user>\` to generate the profile for them)")}
 	else {
 		data.users[message.author.id].cookietime = new Date().getDay()
 		data.users[message.mentions.members.first().id].cookies = parseInt(data.users[message.mentions.members.first().id].cookies) + 1
@@ -524,27 +534,32 @@ if(cmd === "cookie") {
 //--------------------------------------------- Help
 
 if (cmd == "help"){
-	if (!args[0]){message.channel.send(`What do you need help with? Do \`${config.prefix}help <command>\` to recieve help for a specific command or \`${config.prefix}commands\` to view all aviable commands.`)}
+	if (!args[0]){message.channel.send(`What do you need help with? Do \`${config.prefix}help <command>\` to recieve help for a specific command or \`${config.prefix}commands\` to view all aviable commands.\nYou can also do \`${config.prefix}help economy\` for some basic info on economy commands.`)}
 	else {
 		switch (args[0]){
 		case"stalk":
 			var head = `Showing help for: ${config.prefix}stalk\n`
-			var desc = `Use \`${config.prefix}stalk\` <user-mention> to view information about a specific person in the server`
+			var desc = `Use \`${config.prefix}stalk <user-mention>\` to view information about a specific person in the server.`
+			sendhelp2(message, head, desc);
+			break;
+		case"gif":
+			var head = `Showing help for: ${config.prefix}gif\n`
+			var desc = `Use \`${config.prefix}gif <search term>\` for me to search for cool gifs.`
 			sendhelp2(message, head, desc);
 			break;
 		case"say":
 			var head = `Showing help for: ${config.prefix}say\n⁣`
-			var desc = `Use \`${config.prefix}say <text>\` to make me say anything you want`
+			var desc = `Use \`${config.prefix}say <text>\` to make me say anything you want.`
 			sendhelp2(message, head, desc);
 			break;
 		case"sayd":
 			var head = `Showing help for: ${config.prefix}sayd\n⁣`
-			var desc = `Use \`${config.prefix}sayd <text>\` to make me say anything you want and delete you message`
+			var desc = `Use \`${config.prefix}sayd <text>\` to make me say anything you want and delete you message.`
 			sendhelp2(message, head, desc);
 			break;
 		case"8ball":
 			var head = `Showing help for: ${config.prefix}8ball\n⁣`
-			var desc = `Use \`${config.prefix}8ball <question>\` for me to answer all your questions`
+			var desc = `Use \`${config.prefix}8ball <question>\` for me to answer all your questions.`
 			sendhelp2(message, head, desc);
 			break;
 		case"gamble":
@@ -564,9 +579,9 @@ if (cmd == "help"){
 			break;
 		case"set":
 			var head = `Showing help for: ${config.prefix}set\n⁣`
-			var desc = `Use \`${config.prefix}set color <hex-value | pre-defined color>\`\nto set your profile color for $100\n\nUse \`${config.prefix}bio <text>\` to set your bio on your profile\n⁣`
+			var desc = `Use \`${config.prefix}set color <hex-value | pre-defined color>\`\nto set your profile color for $100\n\nUse \`${config.prefix}bio <text>\` to set your bio on your profile.\n⁣`
 			var optional1 = "Pre-Defined colors:"
-			var optional2 = "red, orange, green, lightgreen, blue, lightblue"
+			var optional2 = "red, orange, green, lightgreen, blue, lightblue, black, white"
 			sendhelp(message, head, desc, optional1, optional2);
 			break;
 		case"resetcolor":
@@ -598,7 +613,7 @@ if (cmd == "help"){
 			break;
 		case"profile":
 			var head = `Showing help for: ${config.prefix}profile\n⁣`
-			var desc = `Use \`${config.prefix}profile (<user-mention>)\` to view your or another persons profile!`
+			var desc = `Use \`${config.prefix}profile (<user-mention>)\` to view your or another persons profile! This also generates new profiles if no existing one was found.`
 			sendhelp2(message, head, desc);
 			break;
 		case"buy":
@@ -618,8 +633,28 @@ if (cmd == "help"){
 			var desc = `Use \`${config.prefix}avatar (<user-mention>)\` or \`${config.prefix}pfp (<user-mention>)\` to view a persons avatar.⁣`
 			sendhelp2(message, head, desc, optional1, optional2);
 			break;
+		case"cookie":
+			var head = `Showing help for: ${config.prefix}cookie\n⁣`
+			var desc = `Use \`${config.prefix}avatar (<user-mention>)\` to give someone a cookie.⁣`
+			sendhelp2(message, head, desc, optional1, optional2);
+			break;
+		case"economy":
+			overembed = new Discord.RichEmbed()
+			.setColor("00ccff")
+			.setTitle(`Showing economy overview\n⁣`)
+			.setDescription(`Economy commands:`)
+			.addField(`${config.prefix}buy`, "Buy items from the shop\nthat you can use wit hother commands.\n⁣", true)
+			.addField(`${config.prefix}cookie`, "Give other users a cookie once a day.\nActs as reputation points.\n⁣", true)
+			.addField(`${config.prefix}daily`, "Get 100-200 credits. Can be\nused once a day\n⁣", true)
+			.addField(`${config.prefix}noodle / ${config.prefix}size`, "Shows a users noodle size.\n⁣", true)
+			.addField(`${config.prefix}profile`, "Shows a users profile or generates a\nnew one if none was found.\n⁣", true)
+			.addField(`${config.prefix}set`, "Allows you to modify your profile.\n⁣", true)
+			.addField(`${config.prefix}resetcolor`, "Resets your profile color and adds $50 to your account.\n⁣")
+			.addField(`${config.prefix}rob`, "Steal other peoples money. You can use weapons\nfrom the shop for a better chance of sucess.\n⁣")
+			message.channel.send(overembed);
+			break;
 		default:
-			message.channel.send(`There's no help aviable for this command because it either doesn't require addidional arguments or because it doesn't exist.`)
+			message.channel.send(`There's no help aviable for this command. Possible reasons:\n\`\`\`CSS\n-it doesn't require addidional arguments\n-there's no further information aviable\n-it doesn't exist\n\`\`\``)
 			break;
 		}
 	}
