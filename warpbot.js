@@ -515,7 +515,7 @@ if(cmd === "daily") {
 	data.users[message.author.id].daily = new Date().getDay()
 	dailies = randomInt(100) + 100
 	data.users[message.author.id].cash = parseInt(data.users[message.author.id].cash) + dailies
-	message.channel.send(`${message.member.displayName}, you got your **${dailies}** daily credits! Come back tomorrow to get more!`) 
+	message.channel.send(`💰 | ${message.member.displayName}, you got your **${dailies}** daily credits! Come back tomorrow to get more!`) 
 }
 
 if(cmd === "cookie") {
@@ -526,7 +526,7 @@ if(cmd === "cookie") {
 	else {
 		data.users[message.author.id].cookietime = new Date().getDay()
 		data.users[message.mentions.members.first().id].cookies = parseInt(data.users[message.mentions.members.first().id].cookies) + 1
-		message.channel.send(`<@${message.mentions.members.first().id}> got a cookie from **${message.author.username}**!`)
+		message.channel.send(`🍪 | <@${message.mentions.members.first().id}> got a cookie from **${message.author.username}**!`)
 	}
 }
 
