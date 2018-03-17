@@ -199,16 +199,13 @@ if (cmd == "profile"){
       member = message.member
     }
     if(data.users[member.id] == undefined) {
-    	if (message.mentions.members.first().user.bot){message.channel.send("Bots don't have profiles!")}
-    	else if(!message.mentions.members.first().user.bot){
-    		data.users[member.id] = {"bio": `~Edit your bio with \`${config.prefix}set bio <text>\`\n~Edit your color with \`${config.prefix}set color <color>\` for $100`, "cash": 100, "color" : "36393E", "Name:": bot.users.find('id', member.id).username, "dick" : randomInt(7) + 2 + `.${randomInt(9)}`, "daily" : 10, "item": "none", "cookies": 0, "cookietime": 10}
-      		fs.writeFile(`./database.json`, JSON.stringify(data, null, 2), function (err) {
-        	if (err) return console.log(err);
-      		});    		
-    	}
+    	data.users[member.id] = {"bio": `~Edit your bio with \`${config.prefix}set bio <text>\`\n~Edit your color with \`${config.prefix}set color <color>\` for $100`, "cash": 100, "color" : "36393E", "Name:": bot.users.find('id', member.id).username, "dick" : randomInt(7) + 2 + `.${randomInt(9)}`, "daily" : 10, "item": "none", "cookies": 0, "cookietime": 10}
+      	fs.writeFile(`./database.json`, JSON.stringify(data, null, 2), function (err) {
+        if (err) return console.log(err);
+      	});   
 }
     else{
-    	if (message.mentions.members.first().user.bot){message.channel.send("Bots don't have profiles!")}
+    	if (member.user.bot){message.channel.send("Bots don't have profiles!")}
     	else{
 			profemb = new Discord.RichEmbed()
 			.setThumbnail(bot.users.find('id', member.id).avatarURL)
@@ -531,7 +528,7 @@ if(cmd === "cookie") {
 	else {
 		data.users[message.author.id].cookietime = new Date().getDay()
 		data.users[message.mentions.members.first().id].cookies = parseInt(data.users[message.mentions.members.first().id].cookies) + 1
-		message.channel.send(`🍪 | <@${message.mentions.members.first().id}> got a cookie from **${message.author.username}**!`)
+		message.channel.send(`🍪 <@${message.mentions.members.first().id}> got a cookie from **${message.author.username}**!`)
 	}
 }
 
