@@ -260,7 +260,7 @@ if (cmd == "rob"){
 	//--checks if a user was mentioned, if that user is in the database and if the amount is a number
 	if (!args[0]){message.channel.send("❌ You didn't specify a victim!")}
 	else if (message.mentions.members.first() == message.member) {message.channel.send("❌ You can't rob yourself!")}
-	else if (message.mentions.members.first() == undefined || data.users[message.mentions.members.first().id] == undefined){message.channel.send("❌ I can't find that victim in my database! :/ (Do \`;profile <user>\` to generate the profile for them)")}
+	else if (message.mentions.members.first() == undefined || data.users[message.mentions.members.first().id] == undefined){message.channel.send("❌ I can't find that victim in my database! :/ \n(Do \`;profile <user>\` to generate the profile for them)")}
 	else if (!args[1] || isNaN(args[1])){
 		message.channel.send("❌ You have to specify how much you want to steal in numbers!")
 	} else {
@@ -505,7 +505,7 @@ if (cmd == "noodle" || cmd == "size"){
 	} else {
 		user = message.mentions.members.first()
 		if(data.users[user.id] == undefined) {
-			message.channel.send(`❌ I can't find that user in my database :/ (Do \`;profile <user>\` to generate the profile for them)`)	
+			message.channel.send(`❌ I can't find that user in my database :/ \n(Do \`;profile <user>\` to generate the profile for them)`)	
 		} else {
 			message.channel.send(`${user.displayName}'s noodle is **` + data.users[user.id].dick + " inches** long!")			
 		}
@@ -524,7 +524,7 @@ if(cmd === "cookie") {
 	if(data.users[message.author.id].cookietime == new Date().getDay()) return message.channel.send("❌ You can only give one cookie a day!");
 	else if (!message.mentions.members.first()){message.channel.send("❌ You need to mention the person you want to give the cookie to!")}
 	else if (message.mentions.members.first() == message.member){message.channel.send("You can't give yourself a cookie!")}
-	else if (data.users[message.mentions.members.first().id] == undefined){message.channel.send("❌ I can't find that user in my database :/ (Do \`;profile <user>\` to generate the profile for them)")}
+	else if (data.users[message.mentions.members.first().id] == undefined){message.channel.send("❌ I can't find that user in my database :/ \n(Do \`;profile <user>\` to generate the profile for them)")}
 	else {
 		data.users[message.author.id].cookietime = new Date().getDay()
 		data.users[message.mentions.members.first().id].cookies = parseInt(data.users[message.mentions.members.first().id].cookies) + 1
