@@ -217,7 +217,6 @@ if (cmd == "profile"){
 		.addField("Item equipped:\n⁣", data.users[member.id].item, true)
 		//.addField("User:\n⁣", message.member.username)
 		message.channel.send(profemb)
-		}
 	}
 }
 
