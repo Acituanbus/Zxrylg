@@ -84,13 +84,13 @@ if (cmd == "hug"){
 	}
 	else if (args[0] == message.author){
 		hugembed = new Discord.RichEmbed()
-		.setColor("FF77FF")
+		.setColor("00ccff")
 		.setTitle(`3: Aww, alone? You'll find someone special, I promise!`)
 		.setImage("https://media2.giphy.com/media/ArLxZ4PebH2Ug/giphy.gif")
 		message.channel.send(hugembed)
 	} else {
 		hugembed = new Discord.RichEmbed()
-		.setColor("FF77FF")
+		.setColor("00ccff")
 		.setTitle(`${message.author.username} just hugged ${message.mentions.members.first().displayName} 💗`)
 		.setImage(hugs[Math.floor(Math.random()*hugs.length)])
 		message.channel.send(hugembed)
@@ -202,6 +202,8 @@ if (cmd == "profile"){
     	data.users[member.id] = {"bio": `~Edit your bio with \`${config.prefix}set bio <text>\`\n~Edit your color with \`${config.prefix}set color <color>\` for $100`, "cash": 100, "color" : "36393E", "Name:": bot.users.find('id', member.id).username, "dick" : randomInt(7) + 2 + `.${randomInt(9)}`, "daily" : 10, "item": "none", "cookies": 0, "cookietime": 10}
       	fs.writeFile(`./database.json`, JSON.stringify(data, null, 2), function (err) {
         if (err) return console.log(err);
+        message.channel.send("No user profile found. Generating...")
+        message.channel.send(`User profile generated. Do \`${config.prefix}profile <user-mention>\` to view their profile.`)
       	});   
 }	if (member.user.bot){message.channel.send("Bots don't have profiles!")}
     else{
@@ -446,6 +448,50 @@ if (cmd == "set"){
 }
 
 if (cmd == "buy"){
+	msgauthor = message.author
+	const filter = (reaction, user) => !user.bot && user.id == message.author.id;
+	buyembed = new Discord.RichEmbed()
+	.setColor("00ccff")
+	.setTitle("Aviable items:")
+	.setDescription("React with the item you want to buy.\n⁣")
+	.addField("🔪 Knife", "$250", true)
+	.addField("🔫 Gun", "$500", true)
+	message.channel.send(buyembed)
+	.then(function(message){
+		message.react("🔪");
+		message.react("🔫");
+
+		let collector = message.createReactionCollector(filter, { time: 12000 });
+		collector.on('collect', (reaction, collector) => {
+			const chosen = reaction.emoji.name;
+			if(chosen === "🔪"){
+    			if (data.users[msgauthor.id].cash < 250){message.edit("❌ You need at least `$250` to buy this.")}
+				else {
+					data.users[msgauthor.id].cash = parseInt(data.users[msgauthor.id].cash) - 250
+					data.users[msgauthor.id].item = "Knife"
+					message.edit("✅ Set your weapon to **Knife** for `$250`.")
+				}
+    		}else if(chosen === "🔫"){
+				if (data.users[msgauthor.id].cash < 500){message.edit("❌ You need at least `$500` to buy this.")}
+				else {
+					data.users[msgauthor.id].cash = parseInt(data.users[msgauthor.id].cash) - 500
+					data.users[msgauthor.id].item = "Gun"
+					message.edit("✅ Set your weapon to **Gun** for `$500`.")
+				}
+    		}else {
+    			message.edit("I don't have a `" + reaction.emoji.name + "` for sale.")
+    		}
+    		collector.stop();
+		});
+		collector.on('end', collected => {message.channel.send(`Exited shop.`);});
+		})
+	.catch(function(){console.log("--Shop error--")});
+    /*message.reply('testing emoji edit').then(msg => {
+    msg.react('😀').then((msgreaction) => msgreaction.message.edit('Ok:'));
+    })*/
+}
+
+/*if (cmd == "buy"){
 	if (!args[0]){message.channel.send("What do you want to buy?\nAviable items: `knife`, `gun`")}
 	else{
 		switch(args[0]){
@@ -469,7 +515,7 @@ if (cmd == "buy"){
 					message.channel.send("❌ You can't buy that!")
 		}
 	}
-}
+}*/
 
 if (cmd == "resetcolor"){
 	let profcolor = data.users[message.author.id].color
@@ -490,7 +536,7 @@ if (cmd == "money"){
 	else if (message.author.id != "180995521622573057"){
 		message.channel.send("❌ You don't have permission to use this command!")
 	} else {
-		data.users[message.author.id].cash = amount
+		data.users[message.author.id].cash = parseInt(amount)
 		message.channel.send("✅ I set your money to `$" + amount + "`!")
 	}
 }
@@ -510,7 +556,7 @@ if (cmd == "noodle" || cmd == "size"){
 }
 
 if(cmd === "daily") {
-	if(data.users[message.author.id].daily == new Date().getDay()) return message.channel.send("❌ You can only do this once a day!");
+	if(data.users[message.author.id].daily == new Date().getDay()) return message.channel.send("❌ You can only do this once per day!");
 	data.users[message.author.id].daily = new Date().getDay()
 	dailies = randomInt(100) + 100
 	data.users[message.author.id].cash = parseInt(data.users[message.author.id].cash) + dailies
@@ -518,7 +564,7 @@ if(cmd === "daily") {
 }
 
 if(cmd === "cookie") {
-	if(data.users[message.author.id].cookietime == new Date().getDay()) return message.channel.send("❌ You can only give one cookie a day!");
+	if(data.users[message.author.id].cookietime == new Date().getDay()) return message.channel.send("❌ You can only give one cookie per day!");
 	else if (!message.mentions.members.first()){message.channel.send("❌ You need to mention the person you want to give the cookie to!")}
 	else if (message.mentions.members.first() == message.member){message.channel.send("You can't give yourself a cookie!")}
 	else if (data.users[message.mentions.members.first().id] == undefined){message.channel.send("❌ I can't find that user in my database :/ \n(Do \`;profile <user>\` to generate the profile for them)")}
@@ -642,8 +688,8 @@ if (cmd == "help"){
 			.setTitle(`Showing economy overview\n⁣`)
 			.setDescription(`Economy commands:`)
 			.addField(`${config.prefix}buy`, "Buy items from the shop\nthat you can use wit hother commands.\n⁣", true)
-			.addField(`${config.prefix}cookie 🍪`, "Give other users a cookie once a day.\nActs as reputation points.\n⁣", true)
-			.addField(`${config.prefix}daily 💰`, "Get 100-200 credits. Can be\nused once a day\n⁣", true)
+			.addField(`${config.prefix}cookie 🍪`, "Give other users a cookie once per day.\nActs as reputation points.\n⁣", true)
+			.addField(`${config.prefix}daily 💰`, "Get 100-200 credits. Can be\nused once per day\n⁣", true)
 			.addField(`${config.prefix}noodle / ${config.prefix}size 📏`, "Shows a users noodle size.\n⁣", true)
 			.addField(`${config.prefix}profile`, "Shows a users profile or generates a\nnew one if none was found.\n⁣", true)
 			.addField(`${config.prefix}set`, "Allows you to modify your profile.\n⁣", true)
