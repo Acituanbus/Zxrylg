@@ -203,22 +203,20 @@ if (cmd == "profile"){
       	fs.writeFile(`./database.json`, JSON.stringify(data, null, 2), function (err) {
         if (err) return console.log(err);
       	});   
-}
+}	if (member.user.bot){message.channel.send("Bots don't have profiles!")}
     else{
-    	if (member.user.bot){message.channel.send("Bots don't have profiles!")}
-    	else{
-			profemb = new Discord.RichEmbed()
-			.setThumbnail(bot.users.find('id', member.id).avatarURL)
-			.setAuthor(`${bot.users.find('id', member.id).username}'s Profile\n⁣`, "https://i.imgur.com/4zvlRip.png")
-			.setColor(data.users[member.id].color)
-			.setTitle(`Bio:\n⁣`)
-			.setDescription(`**${data.users[member.id].bio}**\n⁣`)
-			.addField("Cash:\n⁣", "💰 $"+data.users[member.id].cash + "\n⁣", true)
-			.addField("Cookies:", `🍪 ${data.users[member.id].cookies}\n⁣`, true)
-			.addField("Noodle size:\n⁣", "📏 " + data.users[member.id].dick + " Inches\n⁣", true)
-			.addField("Item equipped:\n⁣", data.users[member.id].item, true)
-			//.addField("User:\n⁣", message.member.username)
-			message.channel.send(profemb)
+		profemb = new Discord.RichEmbed()
+		.setThumbnail(bot.users.find('id', member.id).avatarURL)
+		.setAuthor(`${bot.users.find('id', member.id).username}'s Profile\n⁣`, "https://i.imgur.com/4zvlRip.png")
+		.setColor(data.users[member.id].color)
+		.setTitle(`Bio:\n⁣`)
+		.setDescription(`**${data.users[member.id].bio}**\n⁣`)
+		.addField("Cash:\n⁣", "💰 $"+data.users[member.id].cash + "\n⁣", true)
+		.addField("Cookies:", `🍪 ${data.users[member.id].cookies}\n⁣`, true)
+		.addField("Noodle size:\n⁣", "📏 " + data.users[member.id].dick + " Inches\n⁣", true)
+		.addField("Item equipped:\n⁣", data.users[member.id].item, true)
+		//.addField("User:\n⁣", message.member.username)
+		message.channel.send(profemb)
 		}
 	}
 }
