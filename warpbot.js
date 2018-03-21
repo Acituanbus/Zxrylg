@@ -32,14 +32,14 @@ bot.on('message', message => {
 
 fs.readFile(`./database.json`, `utf8`, (err, data) => {
 	data = JSON.parse(data, null, 2)
+	if(message.content.indexOf(config.prefix) !== 0) return;
 
-if(data.users[message.author.id] == undefined) {
+function genprofile() {
       data.users[message.author.id] = {"bio": `~Edit your bio with \`${config.prefix}set bio <text>\`\n~Edit your color with \`${config.prefix}set color <color>\` for $100`, "cash": 100, "color" : "36393E", "Name:": message.author.username, "dick" : randomInt(7) + 2 + `.${randomInt(9)}`, "daily" : 10, "item": "none", "cookies": 0, "cookietime": 10}
       fs.writeFile(`./database.json`, JSON.stringify(data, null, 2), function (err) {
         if (err) return console.log(err);
       });
 }
-	if(message.content.indexOf(config.prefix) !== 0) return;
 
 
 const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
@@ -69,7 +69,7 @@ if (cmd == "choose"){
 
 if (cmd == "8ball"){
 	if (!args[0]) return message.channel.send("❌ You didn't ask me anything!")
-	const eightball = ["**{0}-Senpai has to concentrate and ask again :3**", "**Yes**", "**No**", "**I'm not sure, ask again**", "**Yes, definetly!**", "**Definetly not!**", "**Most likely**", "**Very unlikely**", "**It looks like it..**", "**Doesn't look like it...**", "**Of course!**", "**Of course not!**", "😴 ***Zzzz-* Huh? Oh come on, let me sleep!**", "**I'm busy, can't answer right now!**", "**Yep!**", "**Nope!**", "**Most likely**", "**Pretty unlikely**", "**Yeah!**", "**Nah...**", "**I think so**", "**I don't think so**", "Maybe not, but I think so", "Maybe, but I don't think so", "**I'd rather not answer that...**", "**Uhm, no?**", "**It's a yes!**", "**It's a no!**"]
+	const eightball = ["**{}-Senpai has to concentrate and ask again :3**", "**Yes**", "**No**", "**I'm not sure, ask again**", "**Yes, definetly!**", "**Definetly not!**", "**Most likely**", "**Very unlikely**", "**It looks like it..**", "**Doesn't look like it...**", "**Of course!**", "**Of course not!**", "😴 ***Zzzz-* Huh? Oh come on, let me sleep!**", "**I'm busy, can't answer right now!**", "**Yep!**", "**Nope!**", "**Most likely**", "**Pretty unlikely**", "**Yeah!**", "**Nah...**", "**I think so**", "**I don't think so**", "Maybe not, but I think so", "Maybe, but I don't think so", "**I'd rather not answer that...**", "**Uhm, no?**", "**It's a yes!**", "**It's a no!**"]
 	message.channel.send(eightball[Math.floor(Math.random()*eightball.length)])
 }
 
@@ -198,15 +198,16 @@ if (cmd == "profile"){
     if(!member) {
       member = message.member
     }
-    if(data.users[member.id] == undefined) {
+    if (member.user.bot){message.channel.send("❌ Bots don't have profiles!")}
+    else if(data.users[member.id] == undefined) {
     	data.users[member.id] = {"bio": `~Edit your bio with \`${config.prefix}set bio <text>\`\n~Edit your color with \`${config.prefix}set color <color>\` for $100`, "cash": 100, "color" : "36393E", "Name:": bot.users.find('id', member.id).username, "dick" : randomInt(7) + 2 + `.${randomInt(9)}`, "daily" : 10, "item": "none", "cookies": 0, "cookietime": 10}
       	fs.writeFile(`./database.json`, JSON.stringify(data, null, 2), function (err) {
         if (err) return console.log(err);
-        message.channel.send("No user profile found. Generating...")
-        message.channel.send(`User profile generated. Do \`${config.prefix}profile <user-mention>\` to view their profile.`)
-      	});   
-}	if (member.user.bot){message.channel.send("Bots don't have profiles!")}
-    else{
+        message.channel.send("❌ No user profile found. Generating...")
+        genprofile(message.author);
+        message.channel.send(`✅ User profile generated. Do \`${config.prefix}profile <user-mention>\` to view their profile.`)
+      	});
+    } else {
 		profemb = new Discord.RichEmbed()
 		.setThumbnail(bot.users.find('id', member.id).avatarURL)
 		.setAuthor(`${bot.users.find('id', member.id).username}'s Profile\n⁣`, "https://i.imgur.com/4zvlRip.png")
@@ -217,14 +218,16 @@ if (cmd == "profile"){
 		.addField("Cookies:", `🍪 ${data.users[member.id].cookies}\n⁣`, true)
 		.addField("Noodle size:\n⁣", "📏 " + data.users[member.id].dick + " Inches\n⁣", true)
 		.addField("Item equipped:\n⁣", data.users[member.id].item, true)
+		.addField("`❗` Warning `❗`", "Due to database errors your cookies, money, etc may not be permanent!")
 		//.addField("User:\n⁣", message.member.username)
 		message.channel.send(profemb)
 	}
 }
 
 if (cmd == "$$$" || cmd == "gamble" || cmd == "bet"){
+	if(data.users[message.author.id] == undefined){messsage.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
 	//--checks if the user placed a viable bet
-	if (args[0] == undefined || isNaN(args[0])){
+	else if (args[0] == undefined || isNaN(args[0])){
 		message.channel.send("❌ You need to bet at least $1!")
 	}
 	//--checks if the users cash is enough to bet
@@ -257,7 +260,8 @@ if (cmd == "$$$" || cmd == "gamble" || cmd == "bet"){
 
 if (cmd == "rob"){
 	//--checks if a user was mentioned, if that user is in the database and if the amount is a number
-	if (!args[0]){message.channel.send("❌ You didn't specify a victim!")}
+	if(data.users[message.author.id] == undefined){messsage.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
+	else if (!args[0]){message.channel.send("❌ You didn't specify a victim!")}
 	else if (message.mentions.members.first() == message.member) {message.channel.send("❌ You can't rob yourself!")}
 	else if (message.mentions.members.first() == undefined || data.users[message.mentions.members.first().id] == undefined){message.channel.send("❌ I can't find that victim in my database! :/ \n(Do \`;profile <user>\` to generate the profile for them)")}
 	else if (!args[1] || isNaN(args[1])){
@@ -371,124 +375,129 @@ if (cmd == "rob"){
 }
 
 if (cmd == "set"){
+	if(data.users[message.author.id] == undefined){messsage.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
 	//--tests for different set arguments
-	switch(args[0]){
-	case"color":
-	if (args[1] < 0){
-		message.channel.send("❌ Please use a hex-value or a pre-defined color!")
-		break;
-	}
-	//--tests for different pre-defined colors
-		switch (args[1]){
-			case"red": 
-				var profcolor = "FF0000"
-				break;
-			case"orange":
-				var profcolor = "FF5000"
-				break;
-			case"yellow":
-				var profcolor = "FFFF00"
-				break;				
-			case"green":
-				var profcolor = "009900"
-				break;
-			case"lightgreen":
-				var profcolor = "00FF00"
-				break;
-			case"blue":
-				var profcolor = "0000FF"
-				break;
-			case"lightblue":
-				var profcolor = "00AAFF"
-				break;
-			case"white":
-				var profcolor = "FFFFFF"
-				break;
-			default:
-				var profcolor = args[1]
+	else {
+		switch(args[0]){
+		case"color":
+		if (args[1] < 0){
+			message.channel.send("❌ Please use a hex-value or a pre-defined color!")
+			break;
 		}
-		//--if no color is given:
-		if (profcolor == undefined){
-			message.channel.send("❌ You need to either use a predefined color or give me a hex color to change it to! (For example __0000ff__)")
-		}
-		//--tests if the user has enough money
-		else if (data.users[message.author.id].cash < 100){
-			message.channel.send("❌ You need at least $100 to buy this.")
-		} else {
-			//--removes the money from the users profile
-			data.users[message.author.id].cash = parseInt(data.users[message.author.id].cash) - 100
-			//--sets the profile color to the specified value
-			data.users[message.author.id].color = profcolor
-			//--sends a confirmation message
-			colembed = new Discord.RichEmbed()
-			.setColor(profcolor)
-			.setTitle(profcolor)
-			.setDescription("✅ I updated your profile color for `$100`!")
-			message.channel.send(colembed)
-		}
-		break;
-	case"bio":
-		//--makes sure people give a text to setthe bio to
-		if (!args[1]){
-			message.channel.send("❌ You need to tell me what to set your bio to!")
-		} else {
-			//--saves the specified bio to the users profile
-			let bio = args.slice(1).join(" ")
-			if(args.slice(1).join(" ").length > 500){
-				message.channel.send("❌ That bio is too long! (Max 500 characters)")
-			} else{
-				data.users[message.author.id].bio = bio
-				message.channel.send("✅ I sucessfully updated your bio!")
+		//--tests for different pre-defined colors
+			switch (args[1]){
+				case"red": 
+					var profcolor = "FF0000"
+					break;
+				case"orange":
+					var profcolor = "FF5000"
+					break;
+				case"yellow":
+					var profcolor = "FFFF00"
+					break;				
+				case"green":
+					var profcolor = "009900"
+					break;
+				case"lightgreen":
+					var profcolor = "00FF00"
+					break;
+				case"blue":
+					var profcolor = "0000FF"
+					break;
+				case"lightblue":
+					var profcolor = "00AAFF"
+					break;
+				case"white":
+					var profcolor = "FFFFFF"
+					break;
+				default:
+					var profcolor = args[1]
 			}
+			//--if no color is given:
+			if (profcolor == undefined){
+				message.channel.send("❌ You need to either use a predefined color or give me a hex color to change it to! (For example __0000ff__)")
+			}
+			//--tests if the user has enough money
+			else if (data.users[message.author.id].cash < 100){
+				message.channel.send("❌ You need at least $100 to buy this.")
+			} else {
+				//--removes the money from the users profile
+				data.users[message.author.id].cash = parseInt(data.users[message.author.id].cash) - 100
+				//--sets the profile color to the specified value
+				data.users[message.author.id].color = profcolor
+				//--sends a confirmation message
+				colembed = new Discord.RichEmbed()
+				.setColor(profcolor)
+				.setTitle(profcolor)
+				.setDescription("✅ I updated your profile color for `$100`!")
+				message.channel.send(colembed)
+			}
+			break;
+		case"bio":
+			//--makes sure people give a text to setthe bio to
+			if (!args[1]){
+				message.channel.send("❌ You need to tell me what to set your bio to!")
+			} else {
+				//--saves the specified bio to the users profile
+				let bio = args.slice(1).join(" ")
+				if(args.slice(1).join(" ").length > 500){
+					message.channel.send("❌ That bio is too long! (Max 500 characters)")
+				} else{
+					data.users[message.author.id].bio = bio
+					message.channel.send("✅ I sucessfully updated your bio!")
+				}
+			}
+			break;
+		default:
+				message.channel.send("❌ You need to tell me what you want to change!")
 		}
-		break;
-	default:
-			message.channel.send("❌ You need to tell me what you want to change!")
 	}
 }
 
 if (cmd == "buy"){
-	msgauthor = message.author
-	const filter = (reaction, user) => !user.bot && user.id == message.author.id;
-	buyembed = new Discord.RichEmbed()
-	.setColor("00ccff")
-	.setTitle("Aviable items:")
-	.setDescription("React with the item you want to buy.\n⁣")
-	.addField("🔪 Knife", "$250", true)
-	.addField("🔫 Gun", "$500", true)
-	message.channel.send(buyembed)
-	.then(function(message){
-		message.react("🔪");
-		message.react("🔫");
-
-		let collector = message.createReactionCollector(filter, { time: 12000 });
-		collector.on('collect', (reaction, collector) => {
-			const chosen = reaction.emoji.name;
-			if(chosen === "🔪"){
-    			if (data.users[msgauthor.id].cash < 250){message.edit("❌ You need at least `$250` to buy this.")}
-				else {
-					data.users[msgauthor.id].cash = parseInt(data.users[msgauthor.id].cash) - 250
-					data.users[msgauthor.id].item = "Knife"
-					message.edit("✅ Set your weapon to **Knife** for `$250`.")
-				}
-    		}else if(chosen === "🔫"){
-				if (data.users[msgauthor.id].cash < 500){message.edit("❌ You need at least `$500` to buy this.")}
-				else {
-					data.users[msgauthor.id].cash = parseInt(data.users[msgauthor.id].cash) - 500
-					data.users[msgauthor.id].item = "Gun"
-					message.edit("✅ Set your weapon to **Gun** for `$500`.")
-				}
-    		}else {
-    			message.edit("I don't have a `" + reaction.emoji.name + "` for sale.")
-    		}
-    		collector.stop();
-		});
-		collector.on('end', collected => {message.channel.send(`Exited shop.`);});
-		})
-	.catch(function(){console.log("--Shop error--")});
+	if(data.users[message.author.id] == undefined){messsage.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
+	else{msgauthor = message.author
+		const filter = (reaction, user) => !user.bot && user.id == message.author.id;
+		buyembed = new Discord.RichEmbed()
+		.setColor("00ccff")
+		.setTitle("Aviable items:")
+		.setDescription("React with the item you want to buy.\n⁣")
+		.addField("🔪 Knife", "$250", true)
+		.addField("🔫 Gun", "$500", true)
+		message.channel.send(buyembed)
+		.then(function(message){
+			message.react("🔪");
+			message.react("🔫");
+	
+			let collector = message.createReactionCollector(filter, { time: 12000 });
+			collector.on('collect', (reaction, collector) => {
+				const chosen = reaction.emoji.name;
+				if(chosen === "🔪"){
+    				if (data.users[msgauthor.id].cash < 250){message.edit("❌ You need at least `$250` to buy this.")}
+					else {
+						data.users[msgauthor.id].cash = parseInt(data.users[msgauthor.id].cash) - 250
+						data.users[msgauthor.id].item = "Knife"
+						message.edit("✅ Set your weapon to **Knife** for `$250`.")
+					}
+    			}else if(chosen === "🔫"){
+					if (data.users[msgauthor.id].cash < 500){message.edit("❌ You need at least `$500` to buy this.")}
+					else {
+						data.users[msgauthor.id].cash = parseInt(data.users[msgauthor.id].cash) - 500
+						data.users[msgauthor.id].item = "Gun"
+						message.edit("✅ Set your weapon to **Gun** for `$500`.")
+					}
+    			}else {
+    				message.edit("I don't have a `" + reaction.emoji.name + "` for sale.")
+    			}
+    			collector.stop();
+			});
+			collector.on('end', collected => {message.channel.send(`Exited shop.`);});
+			})
+		.catch(function(){console.log("--Shop error--")});
     /*message.reply('testing emoji edit').then(msg => {
     msg.react('😀').then((msgreaction) => msgreaction.message.edit('Ok:'));
     })*/
+	}
 }
 
 /*if (cmd == "buy"){
@@ -519,7 +528,8 @@ if (cmd == "buy"){
 
 if (cmd == "resetcolor"){
 	let profcolor = data.users[message.author.id].color
-	if (profcolor == "36393E"){
+	if(data.users[message.author.id] == undefined){messsage.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
+	else if (profcolor == "36393E"){
 		message.channel.send("❌ Your profile color isn't modified.")
 	} else {
 		data.users[message.author.id].cash = parseInt(data.users[message.author.id].cash) + 50
@@ -542,7 +552,8 @@ if (cmd == "money"){
 }
 
 if (cmd == "noodle" || cmd == "size"){
-	if (!args[0]){
+	if(data.users[message.author.id] == undefined){messsage.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
+	else if (!args[0]){
 		user = message.author
 		message.channel.send(`${user.username}'s noodle is **` + data.users[user.id].dick + " inches** long!")
 	} else {
@@ -556,15 +567,19 @@ if (cmd == "noodle" || cmd == "size"){
 }
 
 if(cmd === "daily") {
-	if(data.users[message.author.id].daily == new Date().getDay()) return message.channel.send("❌ You can only do this once per day!");
-	data.users[message.author.id].daily = new Date().getDay()
-	dailies = randomInt(100) + 100
-	data.users[message.author.id].cash = parseInt(data.users[message.author.id].cash) + dailies
-	message.channel.send(`💰 | ${message.member.displayName}, you got your **${dailies}** daily credits! Come back tomorrow to get more!`) 
+	if(data.users[message.author.id] == undefined){message.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
+	else if(data.users[message.author.id].daily == new Date().getDay()) return message.channel.send("❌ You can only do this once per day!");
+	else{
+		data.users[message.author.id].daily = new Date().getDay()
+		dailies = randomInt(100) + 100
+		data.users[message.author.id].cash = parseInt(data.users[message.author.id].cash) + dailies
+		message.channel.send(`💰 | ${message.member.displayName}, you got your **${dailies}** daily credits! Come back tomorrow to get more!`)
+	}
 }
 
 if(cmd === "cookie") {
-	if(data.users[message.author.id].cookietime == new Date().getDay()) return message.channel.send("❌ You can only give one cookie per day!");
+	if(data.users[message.author.id] == undefined){messsage.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
+	else if(data.users[message.author.id].cookietime == new Date().getDay()) return message.channel.send("❌ You can only give one cookie per day!");
 	else if (!message.mentions.members.first()){message.channel.send("❌ You need to mention the person you want to give the cookie to!")}
 	else if (message.mentions.members.first() == message.member){message.channel.send("You can't give yourself a cookie!")}
 	else if (data.users[message.mentions.members.first().id] == undefined){message.channel.send("❌ I can't find that user in my database :/ \n(Do \`;profile <user>\` to generate the profile for them)")}
