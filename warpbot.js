@@ -191,6 +191,17 @@ if (cmd == "invite"){
 	message.channel.send(invembed)
 }
 
+if (cmd == "suggest"){
+	if(!args){messsage.channel.send("❌ You didn't suggest anything! ")}
+	else if (args.slice().join(" ").length > 300){message.channel.send("❌ Your suggestion is too long. Please write a shorter one.")}
+	else if (args.slice().join(" ").length < 10){message.channel.send("❌ Your suggestion is too short. Please write a longer one.")}
+	else{
+		suggestion = args.slice().join(" ") 
+		message.channel.send("✅ Thanks for your suggestion")
+		bot.channels.get("426772443143602176").send(`Suggestion by ${message.author.username}:\n\`${suggestion}\``)
+	}
+}
+
 //--------------------------------------------- Profile stuff
 
 if (cmd == "profile"){
