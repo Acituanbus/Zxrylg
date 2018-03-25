@@ -766,7 +766,7 @@ bot.on("guildMemberAdd", (member) => {
 		.setColor("00cc00")
 		.setAuthor(`Member joined!`, `${bot.users.find('id', member.id).avatarURL}`)
 		.setDescription(`**${(bot.users.find('id', member.id).username)}** just joined ${member.guild.name}! Have a good time and read the rules! <:peeper:231404595660849152>`)
-		.setFooter(`Member count: ${member.guild.members.size}\``)
+		.setFooter(`Member count: ${member.guild.members.size}`)
 		bot.channels.get("257063802598588417").send(joinembed)
 	}
 });
