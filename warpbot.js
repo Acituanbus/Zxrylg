@@ -249,8 +249,8 @@ if (cmd == "$$$" || cmd == "gamble" || cmd == "bet"){
 	else if (parseInt(args[0]) < 0){
 		message.channel.send("❌ You can't bet negative money!")
 	}
-	else if (parseInt(args[0]) > 500){
-		message.channel.send("❌ You can't bet more than `$500!`")
+	else if (parseInt(args[0]) > 300){
+		message.channel.send("❌ You can't bet more than `$300!`")
 	}
 	//--uses a function defined above to get a random number between 0 and 100, then tests if its 75 or more
 	else if (randomInt(100) >= 75){
