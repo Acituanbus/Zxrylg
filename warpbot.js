@@ -114,16 +114,18 @@ if (cmd == "gif"){
 
 if (cmd == "avatar" || cmd == "pfp"){
     let user = message.mentions.users.first()
-    if(!user) {
-      user = message.member
-    }
 	if (!args[0]){user = message.author}
-	else {user = message.mentions.members.first()}
-	pfpembed = new Discord.RichEmbed()
-	.setAuthor(bot.users.find('id', user.id).username + "'s Avatar:")
-	.setImage(bot.users.find('id', user.id).avatarURL)	
-	.setFooter(new Date().toDateString())
-	message.channel.send(pfpembed)
+	else {
+		if(!user) {user = message.member}
+		if(user == undefined){message.channel.send("❌ Please mention a valid user.")}
+		else{
+			pfpembed = new Discord.RichEmbed()
+			.setAuthor(bot.users.find('id', user.id).username + "'s Avatar:")
+			.setImage(bot.users.find('id', user.id).avatarURL)	
+			.setFooter(new Date().toDateString())
+			message.channel.send(pfpembed)
+		}
+	}
 }
 
 if(message.content.startsWith(`${config.prefix}stalk`)) {
@@ -803,7 +805,7 @@ bot.on("guildCreate", guild => {
 	.setTimestamp()
 	.addField(`Server info:`, `Name: **${guild.name}**\nid: \`${guild.id}\`\nOwner: **${guild.owner}**\nRegion: **${guild.region}**\nMembers: **${guild.memberCount}**`)
 	bot.channels.get("421751752652488704").send(addembed)
-  	bot.user.setPresence({game: {name: `over ${bot.guilds.size} servers`, type: 3}})
+  	bot.user.setPresence({game: {name: `over ${bot.guilds.size} servers | ${config.prefix}help`, type: 3}})
 });
 
 bot.on("guildDelete", guild => {
@@ -814,7 +816,7 @@ bot.on("guildDelete", guild => {
 	.addField(`Server info:`, `Name: **${guild.name}**\nid: \`${guild.id}\`\nOwner: **${guild.owner}**\nRegion: **${guild.region}**\nMembers: **${guild.memberCount}**`)
 	.setTimestamp()
 	bot.channels.get("421751752652488704").send(removeembed)
-  	bot.user.setPresence({game: {name: `over ${bot.guilds.size} servers`, type: 3}})
+  	bot.user.setPresence({game: {name: `over ${bot.guilds.size} servers | ${config.prefix}help`, type: 3}})
 });
 
 //this will run the code with our bot
