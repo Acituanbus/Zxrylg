@@ -193,8 +193,6 @@ if (cmd == "invite"){
 	message.channel.send(invembed)
 }
 
-
-//unused rn:
 /*if (cmd == "suggest"){
 	if(!args){messsage.channel.send("❌ You didn't suggest anything! ")}
 	else if (args.slice().join(" ").length > 300){message.channel.send("❌ Your suggestion is too long. Please write a shorter one.")}
