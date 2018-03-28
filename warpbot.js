@@ -204,6 +204,40 @@ if (cmd == "invite"){
 	}
 }*/
 
+if (cmd == "kill"){
+	if(!args[0] || message.mentions.members.first() == undefined){message.channel.send("❌ You need to mention a valid user to kill")}
+	else if(message.mentions.members.first().id == message.author.id){message.channel.send("❌ You can't kill yourself!")}
+	else{
+		let waylist = ["deleted", "obliterated", "broke", "crushed", "smashed", "twisted", "drilled a hole in", "exploded", "ripped open", "cut up"]
+		let partlist = ["clothing", "heart", "arm", "leg", "head", "brain", "teeth", "eye", "genitals", "foot", "anus", "finger", "liver", "knee"]
+		let toollist = ["words", "their hands", "a hammer", "an electric drill", "a toothbrush", "magic", "demonic powers", "mind control", "a knife", "a dildo", "a rope", "a gun", "a bow and arrow", "a cannon", "a tank", "a bottle opener", "Youtube-money", "admin powers", "a repulsion cannon", "the precursor gun"]
+
+		let way = waylist[Math.floor(Math.random()*waylist.length)]
+		let part = partlist[Math.floor(Math.random()*partlist.length)]
+		let tool = toollist[Math.floor(Math.random()*toollist.length)]
+		if (way == waylist[0] && part == partlist[0]) {
+			var result = `How embarrasing! *snaps picture of naked ${message.mentions.members.first().displayName}*`
+		}
+		else if (way == waylist[1] && part == partlist[0]) {
+			var result = `How embarrasing! *snaps picture of naked ${message.mentions.members.first().displayName}*`
+		}
+		else if (part == partlist[1] && tool == toollist[0]){
+			var result = `Aww 3: ${message.mentions.members.first().displayName} broke ${message.author.username}'s heart! *hugs*`
+		}
+		else {
+			var user = message.mentions.members.first().displayName
+			let resultlist = [`But **${user}** pressed X and was healed.`, `But **${user}** was resurrected!`, `But **${user}** was rushed into hospital and saved.`, `But **${user}** decided they didn't want to die yet and just left.`, `R.I.P. **${user}** :skull:`, `**${user}** died from emotional despair.`, `**${user}** succumbed to his injuries.`, `**${user}** died on the spot.`]
+			var result = resultlist[Math.floor(Math.random()*resultlist.length)]
+		}
+		killembed = new Discord.RichEmbed()
+		.setColor("bf4eva")
+		.setTitle(`Murder!`)
+		.setDescription(`**${message.author.username}** just ${way} **${message.mentions.members.first().displayName}**'s ${part} with ${tool}!\n\n${result}`)
+		.setThumbnail("https://i.imgur.com/Js9x0QQ.png")
+		message.channel.send(killembed)
+	}
+}
+
 //--------------------------------------------- Profile stuff
 
 if (cmd == "profile"){
@@ -803,7 +837,7 @@ bot.on("guildCreate", guild => {
 	.setThumbnail(guild.iconURL)
 	.setAuthor(`Joined a server:`, `https://i.imgur.com/69DSuf8.png`)
 	.setTimestamp()
-	.addField(`Server info:`, `Name: **${guild.name}**\nid: \`${guild.id}\`\nOwner: **${guild.owner}**\nRegion: **${guild.region}**\nMembers: **${guild.memberCount}**`)
+	.addField(`Server info:`, `Name: **${guild.name}**\nid: \`${guild.id}\`\nOwner: **${guild.owner.username}** (${guild.owner})\nRegion: **${guild.region}**\nMembers: **${guild.memberCount}**`)
 	bot.channels.get("421751752652488704").send(addembed)
   	bot.user.setPresence({game: {name: `over ${bot.guilds.size} servers | ${config.prefix}help`, type: 3}})
 });
@@ -813,7 +847,7 @@ bot.on("guildDelete", guild => {
 	.setColor("FF1122")
 	.setThumbnail(guild.iconURL)
 	.setAuthor(`Left a server:`, `https://i.imgur.com/8CXsPC6.png`)
-	.addField(`Server info:`, `Name: **${guild.name}**\nid: \`${guild.id}\`\nOwner: **${guild.owner}**\nRegion: **${guild.region}**\nMembers: **${guild.memberCount}**`)
+	.addField(`Server info:`, `Name: **${guild.name}**\nid: \`${guild.id}\`\nOwner: **${guild.owner.username}** (${guild.owner})\nRegion: **${guild.region}**\nMembers: **${guild.memberCount}**`)
 	.setTimestamp()
 	bot.channels.get("421751752652488704").send(removeembed)
   	bot.user.setPresence({game: {name: `over ${bot.guilds.size} servers | ${config.prefix}help`, type: 3}})
