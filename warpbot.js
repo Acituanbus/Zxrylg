@@ -147,12 +147,12 @@ if(message.content.startsWith(`${config.prefix}stalk`)) {
 }
 
 if (cmd == "commands" || cmd == "cmds"){
-	message.channel.send(`\`\`\`diff
+	message.channel.send(`\`\`\`asciidoc
 == List of aviable commands ==
 
--Bot Prefix :: ${config.prefix} 
+Bot Prefix :: ${config.prefix} 
 
----   Fun   ---
+== Fun ==
 
 ${config.prefix}8ball      :: Answers questions
 ${config.prefix}kill       :: Kills people
@@ -160,7 +160,7 @@ ${config.prefix}say        :: Makes me say things
 ${config.prefix}sayd       :: Makes me say things, then delete your message
 ${config.prefix}stalk      :: Gets information about people
 
---- Economy ---
+== Economy ==
 
 ${config.prefix}bet        :: Gamble with money
 ${config.prefix}buy        :: Buy items from the shop
@@ -172,7 +172,7 @@ ${config.prefix}resetcolor :: Resets your profile color
 ${config.prefix}rob        :: Steal other's money
 ${config.prefix}set        :: Change profile settings
 
---- Utility ---
+== Utility ==
 
 ${config.prefix}avatar/pfp :: Shows a users avatar
 ${config.prefix}gif        :: Searches for gifs
