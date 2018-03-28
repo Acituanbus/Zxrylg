@@ -42,7 +42,7 @@ function genprofile() {
 }
 
 
-const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+const args = message.cleanContent.slice(config.prefix.length).trim().split(/ +/g);
 const cmd = args.shift().toLowerCase();
 
 //--------------------------------------------- Commands
