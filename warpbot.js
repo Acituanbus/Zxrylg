@@ -147,28 +147,39 @@ if(message.content.startsWith(`${config.prefix}stalk`)) {
 }
 
 if (cmd == "commands" || cmd == "cmds"){
-	message.channel.send(`\`\`\`CSS
-List of aviable commands:
-(Prefix: ${config.prefix})
+	message.channel.send(`\`\`\`diff
+== List of aviable commands ==
 
-		 8ball : Answers questions
-	avatar/pfp : Shows a users avatar
-bet/$$$/gamble : Gamble with money
-	       buy : Buy items from the shop
-	    cookie : Give others a cookie
-	     daily : Get your daily credits
-	       gif : Searches for gifs
-	      info : displays info aboout the bot
-	    invite : Invite the bot to your server
-   noodle/size : Learn about others noodle sizes
-          ping : Pong!
-       profile : Displays your profile
-    resetcolor : Resets your profile color
-           rob : Steal other's money
-           say : Makes me say things
-          sayd : Makes me say things, then delete your message
-           set : Change profile settings
-         stalk : Gets information about people
+-Bot Prefix :: ${config.prefix} 
+
+---   Fun   ---
+
+${config.prefix}8ball      :: Answers questions
+${config.prefix}kill       :: Kills people
+${config.prefix}say        :: Makes me say things
+${config.prefix}sayd       :: Makes me say things, then delete your message
+${config.prefix}stalk      :: Gets information about people
+
+--- Economy ---
+
+${config.prefix}bet        :: Gamble with money
+${config.prefix}buy        :: Buy items from the shop
+${config.prefix}cookie     :: Give others a cookie
+${config.prefix}daily      :: Get your daily credits
+${config.prefix}size       :: Learn about others noodle sizes
+${config.prefix}profile    :: Displays your profile
+${config.prefix}resetcolor :: Resets your profile color
+${config.prefix}rob        :: Steal other's money
+${config.prefix}set        :: Change profile settings
+
+--- Utility ---
+
+${config.prefix}avatar/pfp :: Shows a users avatar
+${config.prefix}gif        :: Searches for gifs
+${config.prefix}info       :: displays info aboout the bot
+${config.prefix}invite     :: Invite the bot to your server
+${config.prefix}ping       :: Pong!
+         
 
 To view help for specific commands, do ${config.prefix}help <command>\`\`\``)
 }
@@ -209,7 +220,7 @@ if (cmd == "kill"){
 	else if(message.mentions.members.first().id == message.author.id){message.channel.send("❌ You can't kill yourself!")}
 	else{
 		let waylist = ["deleted", "obliterated", "broke", "crushed", "smashed", "twisted", "drilled a hole in", "exploded", "ripped open", "cut up"]
-		let partlist = ["clothing", "heart", "arm", "leg", "head", "brain", "teeth", "eye", "genitals", "foot", "anus", "finger", "liver", "knee"]
+		let partlist = ["clothing", "heart", "arm", "leg", "head", "brain", "teeth", "eye", "genitals", "foot", "anus", "finger", "liver", "knee", "lungs", "social media account"]
 		let toollist = ["words", "their hands", "a hammer", "an electric drill", "a toothbrush", "magic", "demonic powers", "mind control", "a knife", "a dildo", "a rope", "a gun", "a bow and arrow", "a cannon", "a tank", "a bottle opener", "Youtube-money", "admin powers", "a repulsion cannon", "the precursor gun"]
 
 		let way = waylist[Math.floor(Math.random()*waylist.length)]
@@ -221,7 +232,8 @@ if (cmd == "kill"){
 		else if (way == waylist[1] && part == partlist[0]) {
 			var result = `How embarrasing! *snaps picture of naked ${message.mentions.members.first().displayName}*`
 		}
-		else if (part == partlist[1] && tool == toollist[0]){
+		else if (part ==
+		 partlist[1] && tool == toollist[0]){
 			var result = `Aww 3: ${message.mentions.members.first().displayName} broke ${message.author.username}'s heart! *hugs*`
 		}
 		else {
