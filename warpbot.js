@@ -3,6 +3,8 @@
 const Discord = require("discord.js");
 const request = require("request");
 const fs = require("fs");
+const shuffle = require('knuth-shuffle').knuthShuffle;
+const  cheerio = require('cheerio');
 //this line tells node that we need the content from our config folder
 const config  = require("./config.json")
 
