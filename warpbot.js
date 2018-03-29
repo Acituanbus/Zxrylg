@@ -75,7 +75,7 @@ if (cmd == "8ball"){
 	message.channel.send(eightball[Math.floor(Math.random()*eightball.length)])
 }
 
-if (cmd === 'r34') {message.channel.send("No fuck you")/*
+if (cmd === 'r34') {message.channel.send("No just shut up :point_up_2:")/*
 	if (message.channel.nsfw === false){message.channel.send("Naughty boy... This is not a nsfw channel!")}
 	  message.channel.startTyping()
 	if (!args[0]) return message.channel.send('**Please include a tag to search for!**')
