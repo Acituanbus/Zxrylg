@@ -261,7 +261,7 @@ if (cmd == "kill"){
 	else{
 		let waylist = ["deleted", "obliterated", "broke", "crushed", "smashed", "twisted", "drilled a hole in", "exploded", "ripped open", "cut up"]
 		let partlist = ["clothing", "heart", "arm", "leg", "head", "brain", "teeth", "eye", "genitals", "foot", "anus", "finger", "liver", "knee", "lungs", "social media account"]
-		let toollist = ["words", "their hands", "a hammer", "an electric drill", "a toothbrush", "magic", "demonic powers", "mind control", "a knife", "a dildo", "a rope", "a gun", "a bow and arrow", "a cannon", "a tank", "a bottle opener", "Youtube-money", "admin powers", "a repulsion cannon", "the precursor gun"]
+		let toollist = ["words", "their hands", "a hammer", "an electric drill", "a toothbrush", "magic", "demonic powers", "mind control", "a knife", "a keyboard", "a rope", "a gun", "a bow and arrow", "a cannon", "a tank", "a bottle opener", "Youtube-money", "admin powers", "a repulsion cannon", "the precursor gun"]
 
 		let way = waylist[Math.floor(Math.random()*waylist.length)]
 		let part = partlist[Math.floor(Math.random()*partlist.length)]
