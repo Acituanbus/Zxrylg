@@ -82,7 +82,7 @@ if (cmd === 'r34') {
 	else{
 		  var url = `https://rule34.xxx/index.php?page=dapi&s=post&q=index&limit=100&tags=${args.join('+')}`
 		  request(url, {json: true}, function (error, response, body) {
-    	if (JSON.stringify(body.data) == '[]') return message.channel.send('**Nothing with that tag found!**')
+    	if (JSON.stringify(body.data) == '[]') return message.channel.send("❌ I couldn't find any images for your search term!")
     	if (error) {
     		message.channel.stopTyping(true)
     		message.channel.send(`Error! Logged to console`)
@@ -95,14 +95,22 @@ if (cmd === 'r34') {
     	var post = $('post').toArray()
     	post = shuffle(post)
     	post = $(post[0])
-    	r34embed = new Discord.RichEmbed()
-    	.setColor("00ccff")
-    	.setImage(post.attr('file_url'))
-    	.setTitle(`Likes: \`${post.attr('score')}\``)
-    	.setDescription(`URL: \`${post.attr('file_url')}\``)
+    	if (post.attr('file_url') == undefined){
+    		r34embed = new Discord.RichEmbed()
+    		.setColor("00ccff")
+    		.setTitle(`Error!`)
+    		.setDescription(`❌ I couldn't find any images for your search term!`)
+    	} else {
+    		r34embed = new Discord.RichEmbed()
+    		.setColor("00ccff")
+    		.setImage(post.attr('file_url'))
+    		.setTitle(`Likes: \`${post.attr('score')}\``)
+    		.setDescription(`URL: \`${post.attr('file_url')}\``)
+    		}
+    	message.channel.stopTyping(true)
     	message.channel.send(r34embed)
-    	  })
-	
+    	})
+
 	}
 }
 
@@ -547,6 +555,7 @@ if (cmd == "set"){
 if (cmd == "buy"){
 	if(data.users[message.author.id] == undefined){message.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
 	else{msgauthor = message.author
+		console.log(msgauthor.username)
 		const filter = (reaction, user) => !user.bot && user.id == message.author.id;
 		buyembed = new Discord.RichEmbed()
 		.setColor("00ccff")
@@ -565,9 +574,15 @@ if (cmd == "buy"){
 				if(chosen === "🔪"){
     				if (data.users[msgauthor.id].cash < 250){message.edit("❌ You need at least `$250` to buy this.")}
 					else {
+						console.log(data.users[msgauthor.id].cash + " -- before")
+						console.log(data.users[msgauthor.id].item + " -- before")
 						data.users[msgauthor.id].cash = parseInt(data.users[msgauthor.id].cash) - 250
 						data.users[msgauthor.id].item = "Knife"
 						message.edit("✅ Set your weapon to **Knife** for `$250`.")
+						console.log(msgauthor.username)
+						console.log(data.users[msgauthor.id].cash + " -- after")
+						console.log(data.users[msgauthor.id].item + " -- after")
+						message.channel.send(msgauthor.username + "'s " + `(${msgauthor.id}) cash: ` + data.users[msgauthor.id].cash)
 					}
     			}else if(chosen === "🔫"){
 					if (data.users[msgauthor.id].cash < 500){message.edit("❌ You need at least `$500` to buy this.")}
@@ -575,6 +590,7 @@ if (cmd == "buy"){
 						data.users[msgauthor.id].cash = parseInt(data.users[msgauthor.id].cash) - 500
 						data.users[msgauthor.id].item = "Gun"
 						message.edit("✅ Set your weapon to **Gun** for `$500`.")
+						console.log(msgauthor.username)
 					}
     			}else {
     				message.edit("I don't have a `" + reaction.emoji.name + "` for sale.")
@@ -582,7 +598,7 @@ if (cmd == "buy"){
     			collector.stop();
 			});
 			collector.on('end', collected => {message.channel.send(`Exited shop.`);});
-			})
+		})
 		.catch(function(){console.log("--Shop error--")});
     /*message.reply('testing emoji edit').then(msg => {
     msg.react('😀').then((msgreaction) => msgreaction.message.edit('Ok:'));
