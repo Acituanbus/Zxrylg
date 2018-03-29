@@ -173,6 +173,8 @@ if(message.content.startsWith(`${config.prefix}stalk`)) {
   	if (!args[0]){message.channel.send("❌ You didn't give me anyone to stalk.")}
   	else if (usr == undefined){message.channel.send("❌ I can't find that person :/")}
   	else {embed = new Discord.RichEmbed()
+  		if(message.author.avatarURL == null){var authorurl = "https://i.imgur.com/AanCcQ1.png"}
+  		else {var authorurl = usr.user.avatarURL}
   		.setColor(usr.displayHexColor)
     	.addField(`Status`, `${usr.presence.status}\n⁣`, true)
     	.addField(`Playing`, usr.presence.game !== null ? `${usr.presence.game.name}\n⁣` : `nothing\n⁣`, true)
@@ -181,7 +183,7 @@ if(message.content.startsWith(`${config.prefix}stalk`)) {
     	.addField(`On Discord since`, usr.user.createdAt.toDateString()+"\n⁣", true)
     	.addField(`Highest role`, usr.highestRole+"\n⁣", true)
     	.setTitle(`Now stalking ${usr.displayName}`, "⁣")
-    	.setThumbnail(usr.user.avatarURL)
+    	.setThumbnail(authorurl)
   		message.channel.send(embed)
   	}
 }
@@ -306,8 +308,10 @@ if (cmd == "profile"){
         message.channel.send(`✅ User profile generated. Do \`${config.prefix}profile <user-mention>\` to view their profile.`)
       	});
     } else {
+    	if(message.author.avatarURL == null){var authorurl = "https://i.imgur.com/AanCcQ1.png"}
+    	else {var authorurl = bot.users.find('id', member.id).avatarURL}
 		profemb = new Discord.RichEmbed()
-		.setThumbnail(bot.users.find('id', member.id).avatarURL)
+		.setThumbnail(authorurl)
 		.setAuthor(`${bot.users.find('id', member.id).username}'s Profile\n⁣`, "https://i.imgur.com/4zvlRip.png")
 		.setColor(data.users[member.id].color)
 		.setTitle(`Bio:\n⁣`)
@@ -857,9 +861,11 @@ function sendhelp2(message, head, desc) {
 bot.on("guildMemberAdd", (member) => {
 	if (member.guild.id != "180995718461259776"){}
 	else{
+		if(message.author.avatarURL == null){var authorurl = "https://i.imgur.com/AanCcQ1.png"}
+		else {var authorurl = bot.users.find('id', member.id).avatarURL}
 		joinembed = new Discord.RichEmbed()
 		.setColor("00cc00")
-		.setAuthor(`Member joined!`, `${bot.users.find('id', member.id).avatarURL}`)
+		.setAuthor(`Member joined!`, `${authorurl}`)
 		.setDescription(`**${(bot.users.find('id', member.id).username)}** just joined ${member.guild.name}! Have a good time and read the rules! <:peeper:231404595660849152>`)
 		.setFooter(`Member count: ${member.guild.members.size}`)
 		bot.channels.get("257063802598588417").send(joinembed)
@@ -869,9 +875,11 @@ bot.on("guildMemberAdd", (member) => {
 bot.on("guildMemberRemove", (member) => {
 	if (member.guild.id != "180995718461259776"){}
 	else{
+		if(message.author.avatarURL == null){var authorurl = "https://i.imgur.com/AanCcQ1.png"}
+		else {var authorurl = bot.users.find('id', member.id).avatarURL}
 		leaveembed = new Discord.RichEmbed()
 		.setColor("cc0000")
-		.setAuthor(`Member left!`, `${bot.users.find('id', member.id).avatarURL}`)
+		.setAuthor(`Member left!`, `${authorurl}`)
 		.setDescription(`**${(bot.users.find('id', member.id).username)}** just disappeared into the void! Bye bye... 😦`)
 		.setFooter(`Member count: ${member.guild.members.size}`)
 		bot.channels.get("257063802598588417").send(leaveembed)
