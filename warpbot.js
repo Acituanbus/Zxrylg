@@ -4,7 +4,7 @@ const Discord = require("discord.js");
 const request = require("request");
 const fs = require("fs");
 const shuffle = require('knuth-shuffle').knuthShuffle;
-const  cheerio = require('cheerio');
+const cheerio = require("cheerio");
 //this line tells node that we need the content from our config folder
 const config  = require("./config.json")
 
@@ -48,6 +48,28 @@ const args = message.cleanContent.slice(config.prefix.length).trim().split(/ +/g
 const cmd = args.shift().toLowerCase();
 
 //--------------------------------------------- Commands
+
+if (cmd === 'r34') {
+      message.channel.startTyping()
+      if (!args[0]) return message.channel.send('**Please include a tag to search for!**')
+      var url = `https://rule34.xxx/index.php?page=dapi&s=post&q=index&limit=100&tags=${args.join('+')}`
+      request(url, {json: true}, function (error, response, body) {
+        if (JSON.stringify(body.data) == '[]') return message.channel.send('**Nothing with that tag found!**')
+        if (error) {
+          message.channel.stopTyping(true)
+          message.channel.send(`Error! Logged to console`)
+          client.users.find('id', 160126799777366020).send('Check the console!')
+          return console.log(error)
+        }
+        var $ = cheerio.load(body)
+        console.log($('post').toArray())
+        message.channel.stopTyping(true)
+        var post = $('post').toArray()
+        post = shuffle(post)
+        post = $(post[0])
+        message.channel.send(`Likes: \`${post.attr('score')}\`\n**URL:** ${post.attr('file_url')}`)
+      })
+    }
 
  if (cmd == "ping") {
    message.channel.send("pong!");
