@@ -269,7 +269,7 @@ if (cmd == "kill"){
 		}
 		else {
 			var user = message.mentions.members.first().displayName
-			let resultlist = [`But **${user}** pressed X and was healed.`, `**${user}** died, but was resurrected!`, `But **${user}** was rushed into hospital and saved.`, `But **${user}** decided they didn't want to die yet and just left.`, `R.I.P. **${user}** :skull:`, `**${user}** died from emotional despair.`, `**${user}** succumbed to his injuries.`, `**${user}** died on the spot.`]
+			let resultlist = [`But **${user}** used a helthpack!`, `But **${user}** pressed X and was healed.`, `**${user}** died, but was resurrected!`, `But **${user}** was rushed into hospital and saved.`, `But **${user}** decided they didn't want to die yet and just left.`, `**${user}** couldn't handle it and ran away, then falling off a cliff.`, `R.I.P. **${user}** :skull:`, `**${user}** died from emotional despair.`, `**${user}** succumbed to his injuries.`, `**${user}** died on the spot.`]
 			var result = resultlist[Math.floor(Math.random()*resultlist.length)]
 		}
 		killembed = new Discord.RichEmbed()
