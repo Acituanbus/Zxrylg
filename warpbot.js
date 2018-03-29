@@ -76,9 +76,9 @@ if (cmd == "8ball"){
 }
 
 if (cmd === 'r34') {
+	if (message.channel.nsfw === false){message.channel.send("Naughty boy... This is not a nsfw channel!")}
 	if (message.author.id == 180995521622573057 || message.author.id == 232931761103962113 || message.author.id == 213454805106950144 ||message.author.id == 326476482081980417){
 		  message.channel.startTyping()
-		if (message.channel.nsfw === false){message.channel.send("Naughty boy... This is not a nsfw channel!")}
 		else if (!args[0]) return message.channel.send('**Please include a tag to search for!**')
 		else{
 			  var url = `https://rule34.xxx/index.php?page=dapi&s=post&q=index&limit=100&tags=${args.join('+')}`
