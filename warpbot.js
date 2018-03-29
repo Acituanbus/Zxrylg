@@ -8,7 +8,7 @@ const cheerio = require("cheerio");
 //this line tells node that we need the content from our config folder
 const config  = require("./config.json")
 
-//this will define our bot:
+//this will define our bot
 var bot = new Discord.Client();
 
 //--------------------------------------------- Prepare
