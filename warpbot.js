@@ -77,37 +77,33 @@ if (cmd == "8ball"){
 
 if (cmd === 'r34') {
 	if (message.channel.nsfw === false){message.channel.send("Naughty boy... This is not a nsfw channel!")}
-	else if (message.author.id == 180995521622573057 || message.author.id == 232931761103962113 || message.author.id == 213454805106950144 ||message.author.id == 326476482081980417){
-		  message.channel.startTyping()
-		if (!args[0]) return message.channel.send('**Please include a tag to search for!**')
-		else{
-			  var url = `https://rule34.xxx/index.php?page=dapi&s=post&q=index&limit=100&tags=${args.join('+')}`
-			  request(url, {json: true}, function (error, response, body) {
-    		if (JSON.stringify(body.data) == '[]') return message.channel.send('**Nothing with that tag found!**')
-    		if (error) {
-    			message.channel.stopTyping(true)
-    			message.channel.send(`Error! Logged to console`)
-    			client.users.find('id', 160126799777366020).send('Check the console!')
-    			return console.log(error)
-    		}
-    		var $ = cheerio.load(body)
-    		//console.log($('post').toArray())
+	  message.channel.startTyping()
+	if (!args[0]) return message.channel.send('**Please include a tag to search for!**')
+	else{
+		  var url = `https://rule34.xxx/index.php?page=dapi&s=post&q=index&limit=100&tags=${args.join('+')}`
+		  request(url, {json: true}, function (error, response, body) {
+    	if (JSON.stringify(body.data) == '[]') return message.channel.send('**Nothing with that tag found!**')
+    	if (error) {
     		message.channel.stopTyping(true)
-    		var post = $('post').toArray()
-    		post = shuffle(post)
-    		post = $(post[0])
-    		r34embed = new Discord.RichEmbed()
-    		.setColor("00ccff")
-    		.setImage(post.attr('file_url'))
-    		.setTitle(`Likes: \`${post.attr('score')}\``)
-    		.setDescription(`URL: \`${post.attr('file_url')}\``)
-    		message.channel.send(r34embed)
-    		  })
+    		message.channel.send(`Error! Logged to console`)
+    		client.users.find('id', 160126799777366020).send('Check the console!')
+    		return console.log(error)
+    	}
+    	var $ = cheerio.load(body)
+    	//console.log($('post').toArray())
+    	message.channel.stopTyping(true)
+    	var post = $('post').toArray()
+    	post = shuffle(post)
+    	post = $(post[0])
+    	r34embed = new Discord.RichEmbed()
+    	.setColor("00ccff")
+    	.setImage(post.attr('file_url'))
+    	.setTitle(`Likes: \`${post.attr('score')}\``)
+    	.setDescription(`URL: \`${post.attr('file_url')}\``)
+    	message.channel.send(r34embed)
+    	  })
 	
-		}
-
 	}
-	else return message.channel.send("https://i.imgur.com/IVX7dZU.png")
 }
 
 if (cmd == "hug"){
@@ -241,7 +237,7 @@ if (cmd == "invite"){
 }
 
 /*if (cmd == "suggest"){
-	if(!args){messsage.channel.send("❌ You didn't suggest anything! ")}
+	if(!args){message.channel.send("❌ You didn't suggest anything! ")}
 	else if (args.slice().join(" ").length > 300){message.channel.send("❌ Your suggestion is too long. Please write a shorter one.")}
 	else if (args.slice().join(" ").length < 10){message.channel.send("❌ Your suggestion is too short. Please write a longer one.")}
 	else{
@@ -320,7 +316,7 @@ if (cmd == "profile"){
 }
 
 if (cmd == "$$$" || cmd == "gamble" || cmd == "bet"){
-	if(data.users[message.author.id] == undefined){messsage.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
+	if(data.users[message.author.id] == undefined){message.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
 	//--checks if the user placed a viable bet
 	else if (args[0] == undefined || isNaN(args[0])){
 		message.channel.send("❌ You need to bet at least $1!")
@@ -355,7 +351,7 @@ if (cmd == "$$$" || cmd == "gamble" || cmd == "bet"){
 
 if (cmd == "rob"){
 	//--checks if a user was mentioned, if that user is in the database and if the amount is a number
-	if(data.users[message.author.id] == undefined){messsage.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
+	if(data.users[message.author.id] == undefined){message.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
 	else if (!args[0]){message.channel.send("❌ You didn't specify a victim!")}
 	else if (message.mentions.members.first() == message.member) {message.channel.send("❌ You can't rob yourself!")}
 	else if (message.mentions.members.first() == undefined || data.users[message.mentions.members.first().id] == undefined){message.channel.send("❌ I can't find that victim in my database! :/ \n(Do \`;profile <user>\` to generate the profile for them)")}
@@ -470,7 +466,7 @@ if (cmd == "rob"){
 }
 
 if (cmd == "set"){
-	if(data.users[message.author.id] == undefined){messsage.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
+	if(data.users[message.author.id] == undefined){message.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
 	//--tests for different set arguments
 	else {
 		switch(args[0]){
@@ -550,7 +546,7 @@ if (cmd == "set"){
 }
 
 if (cmd == "buy"){
-	if(data.users[message.author.id] == undefined){messsage.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
+	if(data.users[message.author.id] == undefined){message.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
 	else{msgauthor = message.author
 		const filter = (reaction, user) => !user.bot && user.id == message.author.id;
 		buyembed = new Discord.RichEmbed()
@@ -623,7 +619,7 @@ if (cmd == "buy"){
 
 if (cmd == "resetcolor"){
 	let profcolor = data.users[message.author.id].color
-	if(data.users[message.author.id] == undefined){messsage.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
+	if(data.users[message.author.id] == undefined){message.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
 	else if (profcolor == "36393E"){
 		message.channel.send("❌ Your profile color isn't modified.")
 	} else {
@@ -647,7 +643,7 @@ if (cmd == "money"){
 }
 
 if (cmd == "noodle" || cmd == "size"){
-	if(data.users[message.author.id] == undefined){messsage.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
+	if(data.users[message.author.id] == undefined){message.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
 	else if (!args[0]){
 		user = message.author
 		message.channel.send(`${user.username}'s noodle is **` + data.users[user.id].dick + " inches** long!")
@@ -673,7 +669,7 @@ if(cmd === "daily") {
 }
 
 if(cmd === "cookie") {
-	if(data.users[message.author.id] == undefined){messsage.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
+	if(data.users[message.author.id] == undefined){message.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
 	else if(data.users[message.author.id].cookietime == new Date().getDay()) return message.channel.send("❌ You can only give one cookie per day!");
 	else if (!message.mentions.members.first()){message.channel.send("❌ You need to mention the person you want to give the cookie to!")}
 	else if (message.mentions.members.first() == message.member){message.channel.send("You can't give yourself a cookie!")}
