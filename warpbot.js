@@ -8,7 +8,7 @@ const cheerio = require("cheerio");
 //this line tells node that we need the content from our config folder
 const config  = require("./config.json")
 
-//this will define our bot
+//this will define our bot:
 var bot = new Discord.Client();
 
 //--------------------------------------------- Prepare
@@ -862,7 +862,7 @@ function sendhelp2(message, head, desc) {
 bot.on("guildMemberAdd", (member) => {
 	if (member.guild.id != "180995718461259776"){}
 	else{
-		if(message.author.avatarURL == null){var authorurl = "https://i.imgur.com/AanCcQ1.png"}
+		if(bot.users.find('id', member.id).avatarURL == null){var authorurl = "https://i.imgur.com/AanCcQ1.png"}
 		else {var authorurl = bot.users.find('id', member.id).avatarURL}
 		joinembed = new Discord.RichEmbed()
 		.setColor("00cc00")
@@ -876,7 +876,7 @@ bot.on("guildMemberAdd", (member) => {
 bot.on("guildMemberRemove", (member) => {
 	if (member.guild.id != "180995718461259776"){}
 	else{
-		if(message.author.avatarURL == null){var authorurl = "https://i.imgur.com/AanCcQ1.png"}
+		if(bot.users.find('id', member.id).avatarURL == null){var authorurl = "https://i.imgur.com/AanCcQ1.png"}
 		else {var authorurl = bot.users.find('id', member.id).avatarURL}
 		leaveembed = new Discord.RichEmbed()
 		.setColor("cc0000")
