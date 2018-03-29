@@ -50,26 +50,36 @@ const cmd = args.shift().toLowerCase();
 //--------------------------------------------- Commands
 
 if (cmd === 'r34') {
-      message.channel.startTyping()
-      if (!args[0]) return message.channel.send('**Please include a tag to search for!**')
-      var url = `https://rule34.xxx/index.php?page=dapi&s=post&q=index&limit=100&tags=${args.join('+')}`
-      request(url, {json: true}, function (error, response, body) {
-        if (JSON.stringify(body.data) == '[]') return message.channel.send('**Nothing with that tag found!**')
-        if (error) {
-          message.channel.stopTyping(true)
-          message.channel.send(`Error! Logged to console`)
-          client.users.find('id', 160126799777366020).send('Check the console!')
-          return console.log(error)
-        }
-        var $ = cheerio.load(body)
-        console.log($('post').toArray())
-        message.channel.stopTyping(true)
-        var post = $('post').toArray()
-        post = shuffle(post)
-        post = $(post[0])
-        message.channel.send(`Likes: \`${post.attr('score')}\`\n**URL:** ${post.attr('file_url')}`)
-      })
-    }
+	if (message.author.id != 180995521622573057/* || message.author.id != 232931761103962113 || message.author.id != 213454805106950144*/) return message.channel.send("https://i.imgur.com/IVX7dZU.png")
+	  message.channel.startTyping()
+	if (message.channel.nsfw === false){message.channel.send("Naughty boy... This is not a nsfw channel!")}
+	else if (!args[0]) return message.channel.send('**Please include a tag to search for!**')
+	else{
+		  var url = `https://rule34.xxx/index.php?page=dapi&s=post&q=index&limit=100&tags=${args.join('+')}`
+		  request(url, {json: true}, function (error, response, body) {
+    	if (JSON.stringify(body.data) == '[]') return message.channel.send('**Nothing with that tag found!**')
+    	if (error) {
+    		message.channel.stopTyping(true)
+    		message.channel.send(`Error! Logged to console`)
+    		client.users.find('id', 160126799777366020).send('Check the console!')
+    		return console.log(error)
+    	}
+    	var $ = cheerio.load(body)
+    	//console.log($('post').toArray())
+    	message.channel.stopTyping(true)
+    	var post = $('post').toArray()
+    	post = shuffle(post)
+    	post = $(post[0])
+    	r34embed = new Discord.RichEmbed()
+    	.setColor("00ccff")
+    	.setImage(post.attr('file_url'))
+    	.setTitle(`Likes: \`${post.attr('score')}\``)
+    	.setDescription(`URL: \`${post.attr('file_url')}\``)
+    	message.channel.send(r34embed)
+    	  })
+
+	}
+}
 
  if (cmd == "ping") {
    message.channel.send("pong!");
