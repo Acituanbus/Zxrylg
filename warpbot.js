@@ -264,8 +264,7 @@ if (cmd == "kill"){
 		else if (way == waylist[1] && part == partlist[0]) {
 			var result = `How embarrasing! *snaps picture of naked ${message.mentions.members.first().displayName}*`
 		}
-		else if (part ==
-		 partlist[1] && tool == toollist[0]){
+		else if (part == partlist[1] && tool == toollist[0]){
 			var result = `Aww 3: ${message.mentions.members.first().displayName} broke ${message.author.username}'s heart! *hugs*`
 		}
 		else {
