@@ -172,9 +172,10 @@ if(message.content.startsWith(`${config.prefix}stalk`)) {
   	var usr = message.mentions.members.first()
   	if (!args[0]){message.channel.send("❌ You didn't give me anyone to stalk.")}
   	else if (usr == undefined){message.channel.send("❌ I can't find that person :/")}
-  	else {embed = new Discord.RichEmbed()
+  	else {
   		if(message.author.avatarURL == null){var authorurl = "https://i.imgur.com/AanCcQ1.png"}
   		else {var authorurl = usr.user.avatarURL}
+  		embed = new Discord.RichEmbed()
   		.setColor(usr.displayHexColor)
     	.addField(`Status`, `${usr.presence.status}\n⁣`, true)
     	.addField(`Playing`, usr.presence.game !== null ? `${usr.presence.game.name}\n⁣` : `nothing\n⁣`, true)
