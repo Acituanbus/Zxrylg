@@ -879,16 +879,16 @@ bot.on("guildMemberRemove", (member) => {
 });
 
 bot.on("guildCreate", guild => {
-	joinedembed = new Discord.RichEmbed()
-	.setColor("00ccff")
-	.setAuthor("Acituanbot V-1.0", "https://i.imgur.com/5MfY6QF.jpg")
-	.setTitle("Hey!")
-	.setDescription(`I'm Acibot!\nThanks for adding me to your server! I'm constantly being updated and new commands and features get added all the time!\nDo \`${config.prefix}cmds\` to check all of my commands, or \`${config.prefix}info\` for general information! :D\n⁣`)
-	.addField("You can help!", `If you want to help me out, tell your\nfriends about me and send them this link:\nhttps://goo.gl/zZVjLD\n⁣`)
-	.addField("Want to request a feature?", "If you have an idea for a feature,\nthat you would love me to have, click this link:\nhttps://goo.gl/4wge9f\n⁣")
-	.addField("Thanks a bunch", "for adding me to your server!")
-	.setFooter("Made by Acituanbus#2729", "https://i.imgur.com/fAFm2e8.png")
-	guild.defaultChannel.send(joinedembed)
+	//joinedembed = new Discord.RichEmbed()
+	//.setColor("00ccff")
+	//.setAuthor("Acituanbot V-1.0", "https://i.imgur.com/5MfY6QF.jpg")
+	//.setTitle("Hey!")
+	//.setDescription(`I'm Acibot!\nThanks for adding me to your server! I'm constantly being updated and new commands and features get added all the time!\nDo \`${config.prefix}cmds\` to check all of my commands, or \`${config.prefix}info\` for general information! :D\n⁣`)
+	//.addField("You can help!", `If you want to help me out, tell your\nfriends about me and send them this link:\nhttps://goo.gl/zZVjLD\n⁣`)
+	//.addField("Want to request a feature?", "If you have an idea for a feature,\nthat you would love me to have, click this link:\nhttps://goo.gl/4wge9f\n⁣")
+	//.addField("Thanks a bunch", "for adding me to your server!")
+	//.setFooter("Made by Acituanbus#2729", "https://i.imgur.com/fAFm2e8.png")
+	//guild.defaultChannel.send(joinedembed)
 
 
 	addembed = new Discord.RichEmbed()
@@ -896,7 +896,7 @@ bot.on("guildCreate", guild => {
 	.setThumbnail(guild.iconURL)
 	.setAuthor(`Joined a server:`, `https://i.imgur.com/69DSuf8.png`)
 	.setTimestamp()
-	.addField(`Server info:`, `Name: **${guild.name}**\nid: \`${guild.id}\`\nOwner: **${guild.owner.username}** (${guild.owner})\nRegion: **${guild.region}**\nMembers: **${guild.memberCount}**`)
+	.addField(`Server info:`, `Name: **${guild.name}**\nid: \`${guild.id}\`\nOwner: **${guild.owner}**\nRegion: **${guild.region}**\nMembers: **${guild.memberCount}**`)
 	bot.channels.get("421751752652488704").send(addembed)
   	bot.user.setPresence({game: {name: `over ${bot.guilds.size} servers | ${config.prefix}help`, type: 3}})
 });
@@ -906,7 +906,7 @@ bot.on("guildDelete", guild => {
 	.setColor("FF1122")
 	.setThumbnail(guild.iconURL)
 	.setAuthor(`Left a server:`, `https://i.imgur.com/8CXsPC6.png`)
-	.addField(`Server info:`, `Name: **${guild.name}**\nid: \`${guild.id}\`\nOwner: **${guild.owner.username}** (${guild.owner})\nRegion: **${guild.region}**\nMembers: **${guild.memberCount}**`)
+	.addField(`Server info:`, `Name: **${guild.name}**\nid: \`${guild.id}\`\nOwner: **${guild.owner}**\nRegion: **${guild.region}**\nMembers: **${guild.memberCount}**`)
 	.setTimestamp()
 	bot.channels.get("421751752652488704").send(removeembed)
   	bot.user.setPresence({game: {name: `over ${bot.guilds.size} servers | ${config.prefix}help`, type: 3}})
