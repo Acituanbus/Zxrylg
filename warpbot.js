@@ -75,11 +75,12 @@ if (cmd == "8ball"){
 	message.channel.send(eightball[Math.floor(Math.random()*eightball.length)])
 }
 
-if (cmd === 'r34') {message.channel.send("No just shut up :point_up_2:")/*
-	if (message.channel.nsfw === false){message.channel.send("Naughty boy... This is not a nsfw channel!")}
-	  message.channel.startTyping()
-	if (!args[0]) return message.channel.send('**Please include a tag to search for!**')
+if (cmd === 'r34'){
+	if (message.author.id != 232931761103962113) {message.channel.send("No just shut up :point_up_2:")}
+	else if (message.channel.nsfw == false){message.channel.send("Stitch no -_-")}
+	else if (!args[0]) return message.channel.send('**Please include a tag to search for!**')
 	else{
+		  message.channel.startTyping()
 		  var url = `https://rule34.xxx/index.php?page=dapi&s=post&q=index&limit=100&tags=${args.join('+')}`
 		  request(url, {json: true}, function (error, response, body) {
     	if (JSON.stringify(body.data) == '[]') return message.channel.send("❌ I couldn't find any images for your search term!")
@@ -112,7 +113,7 @@ if (cmd === 'r34') {message.channel.send("No just shut up :point_up_2:")/*
     	})
 
 	}
-*/}
+}
 
 if (cmd == "hug"){
 	let hugs = ["https://media1.tenor.com/images/49a21e182fcdfb3e96cc9d9421f8ee3f/tenor.gif", "https://m.popkey.co/32edb3/zE7XE.gif", "https://m.popkey.co/edbc5e/jZVdb.gif", "https://media1.tenor.com/images/b0de026a12e20137a654b5e2e65e2aed/tenor.gif", "https://media.tenor.com/images/ca88f916b116711c60bb23b8eb608694/tenor.gif", "https://media1.tenor.com/images/f2805f274471676c96aff2bc9fbedd70/tenor.gif?itemid=7552077", "https://gifimage.net/wp-content/uploads/2017/06/anime-hug-gif-19.gif", "https://media.giphy.com/media/DjczAlIcyK1Co/giphy.gif", "https://thumbs.gfycat.com/AlienatedUnawareArcherfish-max-1mb.gif", "https://m.popkey.co/fca5d5/bXDgV.gif", "https://media.giphy.com/media/143v0Z4767T15e/giphy.gif", "http://gifimage.net/wp-content/uploads/2017/06/anime-hug-gif-4.gif", "https://gifimage.net/wp-content/uploads/2017/01/Anime-hug-GIF-Image-Download-7.gif", "https://78.media.tumblr.com/5b698824a746c5ca72253904eaef1883/tumblr_o19a4cWGhs1satyyro1_500.gif", "https://78.media.tumblr.com/f2a878657add13aa09a5e089378ec43d/tumblr_n5uovjOi931tp7433o1_500.gif", "https://i.pinimg.com/originals/f5/8d/c0/f58dc05305285aefd2efdb8b5671d2c8.gif", "http://media.tumblr.com/tumblr_m68m3wjllW1qewqw2.gif", "https://im-01.gifer.com/8X6d.gif", "https://media.giphy.com/media/lrr9rHuoJOE0w/giphy.gif", "https://i.imgur.com/rlOJqHL.gif", "https://i.imgur.com/ObUlwNQ.gif", "https://media1.tenor.com/images/b8b017d93d2e24d43f48ac6c63464a9c/tenor.gif", "http://gifimage.net/wp-content/uploads/2017/09/anime-hug-gif-2.gif"]
