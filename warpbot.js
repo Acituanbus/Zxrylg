@@ -32,6 +32,40 @@ bot.on('message', message => {
 
 	if(message.author.bot || !message.guild) return
 
+	if (message.channel.id == "429291000436097055"){
+		message.channel.fetchMessages({limit:2})
+		.then((messages) => {
+			fetchedMessages = []
+			messages.forEach((message) => {
+			fetchedMessages.push(message)
+			})
+			let msgargs = fetchedMessages[1].cleanContent.slice().trim().split(/ +/g);
+			if(isNaN(parseInt(fetchedMessages[0].content))){
+				message.delete()
+				message.author.send(`❌ Please only post numbers.`)
+			}
+			else if(`(${fetchedMessages[0].author.id}):` == msgargs[1]){
+				message.delete()
+				message.author.send(`❌ You were the last person to count. Wait for another user to count.`)
+			}
+			else if(parseInt(fetchedMessages[0].content) <= parseInt(msgargs[3])){
+				message.delete()
+				message.author.send(`❌ Please only post the next higher number. -> \`${parseInt(msgargs[3]) + 1}\``)
+			}
+			else if(parseInt(fetchedMessages[0].content) > parseInt(msgargs[3]) + 1){
+				message.delete()
+				message.author.send(`❌ Please only post the next higher number. -> \`${parseInt(msgargs[3]) + 1}\``)
+			}
+			else{
+				console.log(`(${fetchedMessages[0].author.id})`)
+				message.delete()
+				//fetchedMessages[1].delete()
+				message.channel.send(`**${message.author.username}** (${message.author.id}): \` ${parseInt(msgargs[3]) + 1} \``)
+			}
+		})
+		.catch(error => console.log(error));
+	}
+
 fs.readFile(`./database.json`, `utf8`, (err, data) => {
 	data = JSON.parse(data, null, 2)
 	if(message.content.indexOf(config.prefix) !== 0) return;
@@ -71,14 +105,14 @@ if (cmd == "choose"){
 
 if (cmd == "8ball"){
 	if (!args[0]) return message.channel.send("❌ You didn't ask me anything!")
-	const eightball = ["**{}-Senpai has to concentrate and ask again :3**", "**Yes**", "**No**", "**I'm not sure, ask again**", "**Yes, definetly!**", "**Definetly not!**", "**Most likely**", "**Very unlikely**", "**It looks like it..**", "**Doesn't look like it...**", "**Of course!**", "**Of course not!**", "😴 ***Zzzz-* Huh? Oh come on, let me sleep!**", "**I'm busy, can't answer right now!**", "**Yep!**", "**Nope!**", "**Most likely**", "**Pretty unlikely**", "**Yeah!**", "**Nah...**", "**I think so**", "**I don't think so**", "Maybe not, but I think so", "Maybe, but I don't think so", "**I'd rather not answer that...**", "**Uhm, no?**", "**It's a yes!**", "**It's a no!**"]
+	const eightball = [`**${message.author.username}-Senpai has to concentrate and ask again :3**`, "**Yes**", "**No**", "**I'm not sure, ask again**", "**Yes, definetly!**", "**Definetly not!**", "**Most likely**", "**Very unlikely**", "**It looks like it..**", "**Doesn't look like it...**", "**Of course!**", "**Of course not!**", "😴 ***Zzzz-* Huh? Oh come on, let me sleep!**", "**I'm busy, can't answer right now!**", "**Yep!**", "**Nope!**", "**Most likely**", "**Pretty unlikely**", "**Yeah!**", "**Nah...**", "**I think so**", "**I don't think so**", "Maybe not, but I think so", "Maybe, but I don't think so", "**I'd rather not answer that...**", "**Uhm, no?**", "**It's a yes!**", "**It's a no!**"]
 	message.channel.send(eightball[Math.floor(Math.random()*eightball.length)])
 }
 
 if (cmd === 'r34'){
 	if (message.author.id != 232931761103962113) {message.channel.send("No just shut up :point_up_2:")}
 	else if (message.channel.nsfw == false){message.channel.send("Stitch no -_-")}
-	else if (!args[0]) return message.channel.send('**Please include a tag to search for!**')
+	else if (!args[0]) return message.channel.send('❌ Please include a tag to search for!')
 	else{
 		  message.channel.startTyping()
 		  var url = `https://rule34.xxx/index.php?page=dapi&s=post&q=index&limit=100&tags=${args.join('+')}`
@@ -292,6 +326,7 @@ if (cmd == "kill"){
 		message.channel.send(killembed)
 	}
 }
+
 
 //--------------------------------------------- Profile stuff
 
