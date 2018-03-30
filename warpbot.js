@@ -40,27 +40,33 @@ bot.on('message', message => {
 			fetchedMessages.push(message)
 			})
 			let msgargs = fetchedMessages[1].cleanContent.slice().trim().split(/ +/g);
+			/*console.log("All: " + msgargs)
+			console.log("0: " + msgargs[0])
+			console.log("1: " + msgargs[1])
+			console.log("2: " + msgargs[2])
+			console.log("3: " + msgargs[3])
+			console.log("4: " + msgargs[4])
+			console.log("5: " + msgargs[5])*/
 			if(isNaN(parseInt(fetchedMessages[0].content))){
 				message.delete()
 				message.author.send(`❌ Please only post numbers.`)
 			}
-			else if(`(${fetchedMessages[0].author.id}):` == msgargs[1]){
+			else if(`:${fetchedMessages[0].author.id}` == msgargs[3]){
 				message.delete()
 				message.author.send(`❌ You were the last person to count. Wait for another user to count.`)
 			}
-			else if(parseInt(fetchedMessages[0].content) <= parseInt(msgargs[3])){
+			else if(parseInt(fetchedMessages[0].content) <= parseInt(msgargs[1])){
 				message.delete()
-				message.author.send(`❌ Please only post the next higher number. -> \`${parseInt(msgargs[3]) + 1}\``)
+				message.author.send(`❌ Please only post the next higher number. -> \`${parseInt(msgargs[1]) + 1}\``)
 			}
-			else if(parseInt(fetchedMessages[0].content) > parseInt(msgargs[3]) + 1){
+			else if(parseInt(fetchedMessages[0].content) > parseInt(msgargs[1]) + 1){
 				message.delete()
-				message.author.send(`❌ Please only post the next higher number. -> \`${parseInt(msgargs[3]) + 1}\``)
+				message.author.send(`❌ Please only post the next higher number. -> \`${parseInt(msgargs[1]) + 1}\``)
 			}
 			else{
-				console.log(`(${fetchedMessages[0].author.id})`)
 				message.delete()
 				//fetchedMessages[1].delete()
-				message.channel.send(`**${message.author.username}** (${message.author.id}): \` ${parseInt(msgargs[3]) + 1} \``)
+				message.channel.send(`\` ${parseInt(msgargs[1]) + 1} \` :${message.author.id} (**${message.author.username}**)`)
 			}
 		})
 		.catch(error => console.log(error));
