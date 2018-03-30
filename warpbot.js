@@ -33,6 +33,7 @@ bot.on('message', message => {
 	if(message.author.bot || !message.guild) return
 
 	if (message.channel.id == "429291000436097055"){
+		if (message.author.id == "180995521622573057" && message.content.startsWith("-: ")) return 
 		message.channel.fetchMessages({limit:2})
 		.then((messages) => {
 			fetchedMessages = []
