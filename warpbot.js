@@ -66,7 +66,7 @@ bot.on('message', message => {
 			else{
 				message.delete()
 				//fetchedMessages[1].delete()
-				message.channel.send(`\` ${parseInt(fetchedMessages[0].content) + 1} \` :${message.author.id} (**${message.author.username}**)`)
+				message.channel.send(`\` ${parseInt(fetchedMessages[0].content)} \` :${message.author.id} (**${message.author.username}**)`)
 			}
 		})
 		.catch(error => console.log(error));
