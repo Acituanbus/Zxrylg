@@ -33,8 +33,8 @@ bot.on('message', message => {
 	if(message.author.bot || !message.guild) return
 
 	if (message.channel.id == "429291000436097055"){
-		if (message.author.id == "180995521622573057" && message.content.startsWith("-: ")) return 
-		message.channel.fetchMessages({limit:3})
+		if (message.content.startsWith(config.prefix)) return message.delete()
+		message.channel.fetchMessages({limit:4})
 		.then((messages) => {
 			fetchedMessages = []
 			messages.forEach((message) => {
@@ -43,6 +43,7 @@ bot.on('message', message => {
 			let msgargs0 = fetchedMessages[0].cleanContent.slice().trim().split(/ +/g);
 			let msgargs1 = fetchedMessages[1].cleanContent.slice().trim().split(/ +/g);
 			let msgargs2 = fetchedMessages[2].cleanContent.slice().trim().split(/ +/g);
+			let msgargs3 = fetchedMessages[3].cleanContent.slice().trim().split(/ +/g);
 			/*console.log("All: " + msgargs)
 			console.log("0: " + msgargs[0])
 			console.log("1: " + msgargs[1])
@@ -70,9 +71,17 @@ bot.on('message', message => {
 				message.delete()
 				if(parseInt(msgargs1[0]) <= parseInt(msgargs1[1]) || parseInt(msgargs1[1]) <= parseInt(msgargs2[1])){
 					message.delete()
+					.catch(error => console.log())
 					fetchedMessages[1].delete()
-					message.channel.send(`\` ${parseInt(msgargs2[1]) + 1} \` :Correction (**Corrected by bot due to error**)`)
-					console.log(msgargs2[1])
+					.catch(error => console.log())
+					message.channel.send(`\` ${parseInt(msgargs2[1]) + 1} \` :Correction (**message spam protection**)`)
+				}
+				else if(msgargs1[3] == msgargs2[3]){
+					message.delete()
+					.catch(error => console.log())
+					fetchedMessages[1].delete()
+					.catch(error => console.log())
+					message.channel.send(`\` ${parseInt(msgargs3[1]) + 1} \` :Correction (**same author protection**)`)
 				}
 				//fetchedMessages[1].delete()
 				else{
