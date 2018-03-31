@@ -40,7 +40,6 @@ bot.on('message', message => {
 			messages.forEach((message) => {
 			fetchedMessages.push(message)
 			})
-			let msgargs0 = fetchedMessages[0].cleanContent.slice().trim().split(/ +/g);
 			let msgargs1 = fetchedMessages[1].cleanContent.slice().trim().split(/ +/g);
 			let msgargs2 = fetchedMessages[2].cleanContent.slice().trim().split(/ +/g);
 			let msgargs3 = fetchedMessages[3].cleanContent.slice().trim().split(/ +/g);
