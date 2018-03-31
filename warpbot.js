@@ -80,7 +80,7 @@ bot.on('message', message => {
 					.catch(error => console.log())
 					fetchedMessages[1].delete()
 					.catch(error => console.log())
-					message.channel.send(`\` ${parseInt(msgargs3[1]) + 1} \` :Correction (**same author protection**)`)
+					message.channel.send(`\` ${parseInt(msgargs3[1]) + 2} \` :Correction (**same author protection**)`)
 				}
 				//fetchedMessages[1].delete()
 				else{
