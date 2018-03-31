@@ -68,7 +68,7 @@ bot.on('message', message => {
 			}
 			else{
 				message.delete()
-				if(parseInt(msgargs1[1]) <= parseInt(msgargs1[1]) || parseInt(msgargs1[1]) <= parseInt(msgargs2[1])){
+				if(parseInt(msgargs1[0]) <= parseInt(msgargs1[1]) || parseInt(msgargs1[1]) <= parseInt(msgargs2[1])){
 					message.delete()
 					fetchedMessages[1].delete()
 					message.channel.send(`\` ${parseInt(msgargs2[1]) + 1} \` :Acibot (**340558638089371649**)`)
