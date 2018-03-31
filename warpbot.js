@@ -34,13 +34,15 @@ bot.on('message', message => {
 
 	if (message.channel.id == "429291000436097055"){
 		if (message.author.id == "180995521622573057" && message.content.startsWith("-: ")) return 
-		message.channel.fetchMessages({limit:2})
+		message.channel.fetchMessages({limit:3})
 		.then((messages) => {
 			fetchedMessages = []
 			messages.forEach((message) => {
 			fetchedMessages.push(message)
 			})
-			let msgargs = fetchedMessages[1].cleanContent.slice().trim().split(/ +/g);
+			let msgargs0 = fetchedMessages[0].cleanContent.slice().trim().split(/ +/g);
+			let msgargs1 = fetchedMessages[1].cleanContent.slice().trim().split(/ +/g);
+			let msgargs2 = fetchedMessages[2].cleanContent.slice().trim().split(/ +/g);
 			/*console.log("All: " + msgargs)
 			console.log("0: " + msgargs[0])
 			console.log("1: " + msgargs[1])
@@ -52,22 +54,31 @@ bot.on('message', message => {
 				message.delete()
 				message.author.send(`❌ Please only post numbers.`)
 			}
-			else if(`:${fetchedMessages[0].author.id}` == msgargs[3]){
+			else if(`:${fetchedMessages[0].author.id}` == msgargs1[3]){
 				message.delete()
 				message.author.send(`❌ You were the last person to count. Wait for another user to count.`)
 			}
-			else if(parseInt(fetchedMessages[0].content) <= parseInt(msgargs[1])){
+			else if(parseInt(fetchedMessages[0].content) <= parseInt(msgargs1[1])){
 				message.delete()
-				message.author.send(`❌ Please only post the next higher number. -> \`${parseInt(msgargs[1]) + 1}\``)
+				message.author.send(`❌ Please only post the next higher number. -> \`${parseInt(msgargs1[1]) + 1}\``)
 			}
-			else if(parseInt(fetchedMessages[0].content) > parseInt(msgargs[1]) + 1){
+			else if(parseInt(fetchedMessages[0].content) > parseInt(msgargs1[1]) + 1){
 				message.delete()
-				message.author.send(`❌ Please only post the next higher number. -> \`${parseInt(msgargs[1]) + 1}\``)
+				message.author.send(`❌ Please only post the next higher number. -> \`${parseInt(msgargs1[1]) + 1}\``)
 			}
 			else{
 				message.delete()
+				if(parseInt(msgargs1[1]) <= parseInt(msgargs1[1]) || parseInt(msgargs1[1]) <= parseInt(msgargs2[1])){
+					message.delete()
+					fetchedMessages[1].delete()
+					message.channel.send(`\` ${parseInt(msgargs2[1]) + 1} \` :Acibot (**340558638089371649**)`)
+					console.log(msgargs2[1])
+				}
 				//fetchedMessages[1].delete()
-				message.channel.send(`\` ${parseInt(fetchedMessages[0].content)} \` :${message.author.id} (**${message.author.username}**)`)
+				else{
+					message.channel.send(`\` ${parseInt(fetchedMessages[0].content)} \` :${message.author.id} (**${message.author.username}**)`)
+				}
+				
 			}
 		})
 		.catch(error => console.log(error));
