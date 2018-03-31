@@ -71,7 +71,7 @@ bot.on('message', message => {
 				if(parseInt(msgargs1[0]) <= parseInt(msgargs1[1]) || parseInt(msgargs1[1]) <= parseInt(msgargs2[1])){
 					message.delete()
 					fetchedMessages[1].delete()
-					message.channel.send(`\` ${parseInt(msgargs2[1]) + 1} \` :Correction (**Error 4023**)`)
+					message.channel.send(`\` ${parseInt(msgargs2[1]) + 1} \` :Correction (**Corrected by bot due to error**)`)
 					console.log(msgargs2[1])
 				}
 				//fetchedMessages[1].delete()
