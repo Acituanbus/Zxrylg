@@ -894,28 +894,45 @@ if (cmd == "help"){
 
 
 if (cmd == "rules"){
+	if (message.author.id != "180995521622573057") return message.channel.send("You're not authorized to do this!")
 	rulembed = new Discord.RichEmbed()
 	.setColor("FAA61A")
 	.setAuthor("Rules:", "https://i.imgur.com/ptRsPrK.png")
-	.setTitle("Please make sure to read and follow these rules:\n")
-	.setDescription(`
-#1: This is a PG server, keep it that way
-#2:
-#3:
-#4:
-#5:
-#6:
-#7:
-#8:
-#9:
-#10:
-#11:
-#12:
-#13:
-#14:
+	.addField(`#1: This is a PG server, keep it that way`, `⁣`)
+	.addField(`#2: Don't spam (includes Copy&Paste msgs as well as emojis) `, `⁣`)
+	.addField(`#3: Keep everything in its corresponding chat `, `⁣`)
+	.addField(`#4: Only use bot commands in the #botcommands chat, exept it fits the conversation / channel topic`, `⁣`)
+	.addField(`#5: Don't insult other people, be nice`, `⁣`)
+	.addField(`#6: Respect the Staff and their decisions, dont try to argue about a warn or mute`, `⁣`)
+	.addField(`#7: Don't abuse tags (like @everyone)! Only use the Server-Team tag if something severe happens!`, `⁣`)
+	.addField(`#8: If you need help, feel free to ask a member of the server team`, `⁣`)
+	.addField(`#9: Please dont advertise your Youtube channel, Discord server, etc.`, `⁣`)
+	.addField(`#10: Youtuber rank is given from 1000+ subs, just ask me or any member of the server team`, `⁣`)
+	.addField(`#11: Don't post Nsfw-related content`, `⁣`)
+	.addField(`#12: You can request access to the #mature-chat (not nsfw) from any staff  member`, `⁣`)
+	.addField(`#13: No toxicity (Don't hate of fandoms, etc... )`, `\n⁣`)
+	.addField("Roles you can aquire by being active:", `
+__<@&251374806459613185>:__ (10.000 server points):
 
+	• purple name
+	• access to a special channel
+	• access to the music bot
+	• allows the use of external emojis
 
-	`)
+__<@&319086134078734336>__ (75.000 server points):
+
+	• orange name
+	• you are displayed seperately in the member list
+	• access to TTS messages
+
+__<@&402041612022185987>:__ (150.000 server points):
+
+	• green name
+	• you are displayed higher up in the member list
+	• get an emoji of your choice (e.g.: <:demonwithin:429991980194594826>)
+⁣`)
+	.setFooter("Thanks and have fun!", "https://i.imgur.com/fAFm2e8.png")
+	message.channel.send(rulembed)
 }
 
 
