@@ -731,7 +731,7 @@ if (cmd == "noodle" || cmd == "size"){
 		message.channel.send(`${user.username}'s noodle is **` + data.users[user.id].dick + " inches** long!")
 	} else {
 		user = message.mentions.members.first()
-		if(data.users[user.id] == undefined) {
+		if(data.users[user] == undefined) {
 			message.channel.send(`❌ I can't find that user in my database :/ \n(Do \`;profile <user>\` to generate the profile for them)`)	
 		} else {
 			message.channel.send(`${user.displayName}'s noodle is **` + data.users[user.id].dick + " inches** long!")			
