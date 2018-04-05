@@ -136,7 +136,7 @@ if (cmd == "8ball"){
 }
 
 if (cmd === 'r34'){
-	if (message.author.id != 232931761103962113) {message.channel.send("No just shut up :point_up_2:")}
+	if (message.author.id != 232931761103962113) {message.channel.send("Bad!")}
 	else if (message.channel.nsfw == false){message.channel.send("Stitch no -_-")}
 	else if (!args[0]) return message.channel.send('❌ Please include a tag to search for!')
 	else{
@@ -890,6 +890,32 @@ if (cmd == "help"){
 			break;
 		}
 	}
+}
+
+
+if (cmd == "rules"){
+	rulembed = new Discord.RichEmbed()
+	.setColor("FAA61A")
+	.setAuthor("Rules:", "https://i.imgur.com/ptRsPrK.png")
+	.setTitle("Please make sure to read and follow these rules:\n")
+	.setDescription(`
+#1: This is a PG server, keep it that way
+#2:
+#3:
+#4:
+#5:
+#6:
+#7:
+#8:
+#9:
+#10:
+#11:
+#12:
+#13:
+#14:
+
+
+	`)
 }
 
 
