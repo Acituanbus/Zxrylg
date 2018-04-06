@@ -353,8 +353,9 @@ if (cmd == "kill"){
 	else if(message.mentions.members.first().id == message.author.id){
 		killembed = new Discord.RichEmbed()
 		.setColor("bf4eva")
+		.setThumbnail("https://i.imgur.com/mZ6F62h.png")
 		.setTitle(`Suicide!`)
-		.setDescription(`**${message.author.username}** just killed themselves with ${tool}`)
+		.setDescription(`**${message.author.username}** just killed themselves with ${tool}!`)
 		message.channel.send(killembed)
 	}
 	else{
