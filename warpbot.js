@@ -309,26 +309,6 @@ if (cmd == "invite"){
 	message.channel.send(invembed)
 }
 
-if (cmd === 'server') {
-      guild = message.guild
-      roles = []
-      guild.roles.forEach((role) => {
-        roles.push(role)
-      })
-      si = new Discord.RichEmbed()
-        .setAuthor(guild.name, guild.iconURL)
-        .addField('ID', guild.id + "\n⁣", true)
-        .addField('Region', guild.region + "\n⁣", true)
-        .addField('Members', guild.members.size + "\n⁣", true)
-        .addField('Channels', guild.channels.size + "\n⁣", true)
-        .addField('Owner', guild.owner + "\n⁣", true)
-        .addField('Roles', roles.join(', ') + "\n⁣")
-        .setThumbnail(guild.iconURL)
-        .setFooter(`Created: ${guild.createdAt.toDateString()}`)
-        .setColor("00ccff")
-      message.channel.send(si)
-    }
-
 /*if (cmd == "suggest"){
 	if(!args){message.channel.send("❌ You didn't suggest anything! ")}
 	else if (args.slice().join(" ").length > 300){message.channel.send("❌ Your suggestion is too long. Please write a shorter one.")}
