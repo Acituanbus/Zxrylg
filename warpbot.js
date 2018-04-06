@@ -308,6 +308,26 @@ if (cmd == "invite"){
 	message.channel.send(invembed)
 }
 
+if (cmd === 'server') {
+      guild = message.guild
+      roles = []
+      guild.roles.forEach((role) => {
+        roles.push(role)
+      })
+      si = new Discord.RichEmbed()
+        .setAuthor(guild.name, guild.iconURL)
+        .addField('ID', guild.id + "\n⁣", true)
+        .addField('Region', guild.region + "\n⁣", true)
+        .addField('Members', guild.members.size + "\n⁣", true)
+        .addField('Channels', guild.channels.size + "\n⁣", true)
+        .addField('Owner', guild.owner + "\n⁣", true)
+        .addField('Roles', roles.join(', ') + "\n⁣")
+        .setThumbnail(guild.iconURL)
+        .setFooter(`Created: ${guild.createdAt.toDateString()}`)
+        .setColor("00ccff")
+      message.channel.send(si)
+    }
+
 /*if (cmd == "suggest"){
 	if(!args){message.channel.send("❌ You didn't suggest anything! ")}
 	else if (args.slice().join(" ").length > 300){message.channel.send("❌ Your suggestion is too long. Please write a shorter one.")}
@@ -323,8 +343,8 @@ if (cmd == "kill"){
 	if(!args[0] || message.mentions.members.first() == undefined){message.channel.send("❌ You need to mention a valid user to kill")}
 	else if(message.mentions.members.first().id == message.author.id){message.channel.send("❌ You can't kill yourself!")}
 	else{
-		let waylist = ["deleted", "obliterated", "broke", "crushed", "smashed", "twisted", "drilled a hole in", "exploded", "ripped open", "cut up"]
-		let partlist = ["clothing", "heart", "arm", "leg", "head", "brain", "teeth", "eye", "genitals", "foot", "anus", "finger", "liver", "knee", "lungs", "social media account"]
+		let waylist = ["deleted", "obliterated", "broke", "crushed", "smashed", "twisted", "drilled a hole in", "exploded", "ripped open", "cut up", "hurt"]
+		let partlist = ["clothing", "heart", "arm", "leg", "head", "brain", "teeth", "eye", "genitals", "foot", "anus", "finger", "liver", "knee", "lungs", "social media account", "feelings"]
 		let toollist = ["words", "their hands", "a hammer", "an electric drill", "a toothbrush", "magic", "demonic powers", "mind control", "a knife", "a keyboard", "a rope", "a gun", "a bow and arrow", "a cannon", "a tank", "a bottle opener", "Youtube-money", "admin powers", "a repulsion cannon", "the precursor gun"]
 
 		let way = waylist[Math.floor(Math.random()*waylist.length)]
@@ -870,6 +890,11 @@ if (cmd == "help"){
 			var desc = `Use \`${config.prefix}avatar (<user-mention>)\` to give someone a cookie.⁣`
 			sendhelp2(message, head, desc, optional1, optional2);
 			break;
+		case"kill":
+			var head = `Showing help for: ${config.prefix}kill\n⁣`
+			var desc = `Use \`${config.prefix}kill <user-mention>\` to kill someone.⁣`
+			sendhelp2(message, head, desc, optional1, optional2);
+			break;
 		case"economy":
 			overembed = new Discord.RichEmbed()
 			.setColor("00ccff")
@@ -894,7 +919,7 @@ if (cmd == "help"){
 
 
 if (cmd == "rules"){
-	if (message.author.id != "180995521622573057") return message.channel.send("You're not authorized to do this!")
+	if (message.author.id != "180995521622573057") return message.channel.send("❌ You are not authorized to do this!")
 	rulembed = new Discord.RichEmbed()
 	.setColor("FAA61A")
 	.setAuthor("Rules:", "https://i.imgur.com/ptRsPrK.png")
@@ -931,7 +956,7 @@ __<@&402041612022185987>:__ (150.000 server points):
 	• you are displayed higher up in the member list
 	• get an emoji of your choice (e.g.: <:demonwithin:429991980194594826>)
 ⁣`)
-	.setFooter("Thanks and have fun!", "https://i.imgur.com/fAFm2e8.png")
+	.setFooter("Hope to sea you around!", "https://i.imgur.com/fAFm2e8.png")
 	message.channel.send(rulembed)
 }
 
