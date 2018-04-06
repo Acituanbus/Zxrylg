@@ -280,8 +280,9 @@ ${config.prefix}set        :: Change profile settings
 
 ${config.prefix}avatar/pfp :: Shows a users avatar
 ${config.prefix}gif        :: Searches for gifs
-${config.prefix}info       :: displays info aboout the bot
+${config.prefix}info       :: Displays info about the bot
 ${config.prefix}invite     :: Invite the bot to your server
+${config.prefix}server     :: Displays info about the server
 ${config.prefix}ping       :: Pong!
          
 
