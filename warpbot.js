@@ -355,6 +355,7 @@ if (cmd == "kill"){
 		.setColor("bf4eva")
 		.setTitle(`Suicide!`)
 		.setDescription(`**${message.author.username}** just killed themselves with ${tool}`)
+		message.channel.send(killembed)
 	}
 	else{
 		if (way == waylist[0] && part == partlist[0]) {
