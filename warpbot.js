@@ -136,7 +136,7 @@ if (cmd == "8ball"){
 }
 
 if (cmd === 'r34'){
-	if (message.author.id != 232931761103962113) {message.channel.send("Bad!")}
+	if (message.author.id != "232931761103962113P") {message.channel.send("Bad!")}
 	else if (message.channel.nsfw == false){message.channel.send("Stitch no -_-")}
 	else if (!args[0]) return message.channel.send('❌ Please include a tag to search for!')
 	else{
