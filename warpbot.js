@@ -521,14 +521,14 @@ if (cmd == "rob"){
 					//--if there was no weapon used:
 					if (item == "none"){
 						var author = `${message.author.username}`
-						var desc = `tried stealing $${parseInt(args[1])} from **${message.mentions.members.first().displayName}** with their bare hands and failed!\n⁣`
+						var desc = `tried stealing $${parseInt(args[1])} from **${message.mentions.members.first().displayName}** with their bare hands and failed!\nThey lost the money themselves\n⁣`
 						var itemurl = "https://www.madcatmarketing.co.uk/wp-content/uploads/2014/10/Bloody-hand-print-on-transparent-background.png"
 						var col= "bf0000"
 					}
 					//--if there was a weapon used:
 					else if (item != "none"){
 						var author = `${message.author.username}`
-						var desc = `tried stealing $${parseInt(args[1])} from **${message.mentions.members.first().displayName}** with a ${item} and failed!\n⁣`
+						var desc = `tried stealing $${parseInt(args[1])} from **${message.mentions.members.first().displayName}** with a ${item} and failed!\nThey lost the money themselves\n⁣`
 						var col = "bf0000"
 						if (item == "Knife"){var itemurl = "https://i.imgur.com/m9mETqB.png"}
 						else if (item == "Gun"){var itemurl = "https://i.imgur.com/adCJMU1.png"}
