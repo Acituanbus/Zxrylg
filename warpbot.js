@@ -631,7 +631,6 @@ if (cmd == "set"){
 if (cmd == "buy"){
 	if(data.users[message.author.id] == undefined){message.channel.send("❌ No user profile found. Generating one now..."); genprofile(); message.channel.send("✅ User profile generated!")}
 	else{msgauthor = message.author
-		console.log(msgauthor.username)
 		const filter = (reaction, user) => !user.bot && user.id == message.author.id;
 		buyembed = new Discord.RichEmbed()
 		.setColor("00ccff")
