@@ -110,7 +110,7 @@ const cmd = args.shift().toLowerCase();
 //--------------------------------------------- Commands
 
 if (cmd == "ping") {
-   message.channel.send("Pong! (test)");
+   message.channel.send("Pong!");
 }
 
 if (cmd == "say"){
