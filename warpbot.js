@@ -8,7 +8,7 @@ const cheerio = require("cheerio");
 //this line tells node that we need the content from our config folder
 const config  = require("./config.json")
 
-//this will define our bot
+//This will define our bot
 var bot = new Discord.Client();
 
 //--------------------------------------------- Prepare
@@ -110,7 +110,7 @@ const cmd = args.shift().toLowerCase();
 //--------------------------------------------- Commands
 
 if (cmd == "ping") {
-   message.channel.send("pong!");
+   message.channel.send("Pong! (test)");
 }
 
 if (cmd == "say"){
