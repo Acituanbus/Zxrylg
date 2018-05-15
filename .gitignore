@@ -4,7 +4,7 @@ config.json
 database.json
 push.sh
 commands.txt
-warpbot1.js
+Acibot1.js
 {
 reaction.emoji.name
 console.log(`Collected
